@@ -6,16 +6,28 @@ namespace apBiblioteca
 {
     public partial class FrmLeitores : Form
     {
+
+
+        /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
+
         VetorDados<Livro> osLivros;
         VetorDados<Leitor> osLeitores;
         VetorDados<TipoLivro> osTipos;
 
         int posicaoDeInclusao = -1;
+
+        /*************************************************************************************************************/
+
         public FrmLeitores()
         {
             InitializeComponent();
         }
 
+        /**************************************    MÉTODOS DA CLASSE        *****************************************/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
         private void FrmLeitores_Load(object sender, EventArgs e)
         {
             // Preenche os campos de identiicação do livro
@@ -42,7 +54,12 @@ namespace apBiblioteca
             // Posiciona o formulário para exibir o primeiro leitor cadastrado
             btnInicio.PerformClick();
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a atualização do datagridview para que assim exiba a versão mais recente dos arquivos de livros e leitores
         private void AtualizarTela()
         {
             if (!osLeitores.EstaVazio)
@@ -76,7 +93,11 @@ namespace apBiblioteca
             }
             TestarBotoes();
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para salvar um novo leitor no arquivo leitores.txt
         private void btnSalvar_Click(object sender, EventArgs e)
         {
             try
@@ -114,9 +135,12 @@ namespace apBiblioteca
             {
                 MessageBox.Show("Erro de arquivo: " + erro.Message);
             }
-
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para verificar o código digitado e continuar o programa de acordo com o modo atual
         private void txtCodigoLeitor_Leave(object sender, EventArgs e)
         {
             try
@@ -173,9 +197,13 @@ namespace apBiblioteca
             {
                 MessageBox.Show("Erro de arquivo: " + erro.Message);
             }
-
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para deixar o programa no modo de inclusão
         private void btnNovo_Click(object sender, EventArgs e)
         {
             // saímos da navegação e entramos no modo de inclusão:
@@ -189,7 +217,12 @@ namespace apBiblioteca
             txtCodigoLeitor.Enabled = true;
             stlbMensagem.Text = "Mensagem: Digite o código do novo leitor";
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibir somente os botões correspondentes ao modo atual do programa 
         private void TestarBotoes()
         {
             // Habilita os botões do menu de acordo com a necessidade do usuario
@@ -210,7 +243,12 @@ namespace apBiblioteca
                 btnUltimo.Enabled = false;
             }
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para limpar os campos da tela para deixá-los prontos para digitação  
         private void LimparTela()
         {
             // Limpamos os campos da tela para deixá-los prontos para digitação            
@@ -220,17 +258,32 @@ namespace apBiblioteca
             txtLivros.Clear();
             stlbMensagem.Text = "Mensagem: ";
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a gravação dos leitores atualizados no arquivo leitores.txt, após o formulário ser fechado
         private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
         {
             osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt"); // Grava os dados atualizados no arquivo texto
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para fechar o formulário de livros
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close(); // Fecha o programa
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exclusão de um leitor no arquivo leitores.txt
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             if (osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor > 0) // leitor tem empréstimos?
@@ -250,7 +303,12 @@ namespace apBiblioteca
                 }
             }
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a busca de leitores no arquivo leitores.txt
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             LimparTela(); // limpamos os campos da tela para deixá-los prontos para digitação
@@ -261,13 +319,23 @@ namespace apBiblioteca
             txtCodigoLeitor.Focus();
             stlbMensagem.Text = "Mensagem: Digite a matrícula do leitor que busca";
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para cancelar o modo atual do programa
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             osLivros.SituacaoAtual = Situacao.navegando;  // desfaz o modo anterior do programa e volta ao modo de navegação
             AtualizarTela();              // restaura na tela o registro que era exibido antes da operação que foi cancelada
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para edição de leitores no arquivo leitores.txt
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor > 0) // leitor possui empréstimos?
@@ -283,7 +351,11 @@ namespace apBiblioteca
                 stlbMensagem.Text = "Mensagem: Digite os dados atualizados pressione [Salvar] para registrá-los.";
             }            
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibição do 1° leitor do arquivo leitores.txt
         private void btnPrimeiro_Click(object sender, EventArgs e)
         {
             // O primeiro registro do arquivo é apresentado na tela
@@ -292,7 +364,11 @@ namespace apBiblioteca
             AtualizarTela();
             btnSalvar.Enabled = false;
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibição do livro anterior ao atual do arquivo livros.txt
         private void btnAnterior_Click(object sender, EventArgs e)
         {
             // O registro anterior do arquivo é apresentado na tela
@@ -301,7 +377,12 @@ namespace apBiblioteca
             AtualizarTela();
             btnSalvar.Enabled = false;
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibição do próximo leitor em relação ao atual do arquivo leitores.txt
         private void btnProximo_Click(object sender, EventArgs e)
         {
             // O próximo registro do arquivo é apresentado na tela
@@ -310,7 +391,12 @@ namespace apBiblioteca
             AtualizarTela();
             btnSalvar.Enabled = false;
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibição do último leitor do arquivo leitores.txt
         private void btnUltimo_Click(object sender, EventArgs e)
         {
             // O último registro do arquivo é apresentado na tela
@@ -319,5 +405,6 @@ namespace apBiblioteca
             AtualizarTela();
             btnSalvar.Enabled = false;
         }
+        /*-----------------------------------------------------------------------------------------------------*/
     }
 }
