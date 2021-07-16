@@ -1,0 +1,70 @@
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.csprojAssemblyReference.cache
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.FrmBiblioteca.resources
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.Properties.Resources.resources
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.csproj.GenerateResource.cache
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.Frmlivros.resources
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\bin\Debug\apBiblioteca.exe.config
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\bin\Debug\apBiblioteca.exe
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\bin\Debug\apBiblioteca.pdb
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.exe
+D:\disciplinas\TecPro\VetoresDeObjetos\apBiblioteca\obj\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\bin\Debug\apBiblioteca.exe.config
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\bin\Debug\apBiblioteca.exe
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\bin\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.csprojAssemblyReference.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.FrmBiblioteca.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.FrmLivros.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.Properties.Resources.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.csproj.GenerateResource.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.csproj.CoreCompileInputs.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.exe
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca\obj\Debug\apBiblioteca.FrmLeitores.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\bin\Debug\apBiblioteca.exe.config
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\bin\Debug\apBiblioteca.exe
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\bin\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csprojAssemblyReference.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmBiblioteca.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLeitores.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLivros.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.Properties.Resources.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csproj.GenerateResource.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csproj.CoreCompileInputs.cache
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.exe
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmTipoLivro.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmEmprestimo.resources
+C:\Users\Convidado\Music\Exercícios do Chico\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmDevolucoes.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\bin\Debug\apBiblioteca.exe.config
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\bin\Debug\apBiblioteca.exe
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\bin\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csprojAssemblyReference.cache
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmBiblioteca.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmDevolucoes.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmEmprestimo.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLeitores.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLivros.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmTipoLivro.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.Properties.Resources.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csproj.GenerateResource.cache
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.csproj.CoreCompileInputs.cache
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.exe
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.pdb
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLivrosAtrasados.resources
+C:\Users\Convidado\Pictures\apBiblioteca - Cópia\obj\Debug\apBiblioteca.FrmLivrosEmprestados.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\bin\Debug\apBiblioteca.exe.config
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\bin\Debug\apBiblioteca.exe
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\bin\Debug\apBiblioteca.pdb
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.csprojAssemblyReference.cache
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmBiblioteca.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmDevolucoes.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmEmprestimo.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmLeitores.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmLivros.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmLivrosAtrasados.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmLivrosEmprestados.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.FrmTipoLivro.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.Properties.Resources.resources
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.csproj.GenerateResource.cache
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.exe
+C:\Users\aluno\Music\Repositorios_Git\20130_Projeto3TP1\obj\Debug\apBiblioteca.pdb
