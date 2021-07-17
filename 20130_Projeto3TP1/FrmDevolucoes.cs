@@ -23,7 +23,6 @@ namespace apBiblioteca
         int linhaLeitor = -1;
         int linhaLivro  = -1;
 
-
         /*************************************************************************************************************/
 
 
@@ -52,8 +51,8 @@ namespace apBiblioteca
         // Método para a gravação dos dados de leitores e livros atualizados, após o formulário ser fechado
         private void FrmDevolucoes_FormClosing(object sender, FormClosingEventArgs e)
         {
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
@@ -74,7 +73,7 @@ namespace apBiblioteca
 
 
                     byte qtdLivros = osLeitores[indice].QuantosLivrosComLeitor;
-                    if (qtdLivros >= 0) // leitor fez empréstimos?
+                    if (qtdLivros > 0) // leitor fez empréstimos?
                     {
                         // Exibi o código dos livros que estão emprestados
                         // através do vetor CodigoLivroComLeitor[]
@@ -137,6 +136,10 @@ namespace apBiblioteca
                                 break;
                         }
                     }
+                    else
+                    {
+                        dgvLeitor.Rows.Clear();
+                    }
                 }                
             }
         }
@@ -180,7 +183,7 @@ namespace apBiblioteca
         void ExibirLivroDevolucao()
         {
 
-            //É passado quantas linhas o dgvLeitor deve conter
+            //É passado quantas linhas o dgvLivro deve conter
             byte linhaAtualLeitor = Convert.ToByte(dgvLeitor.CurrentRow.Index);
             dgvLivro.RowCount = osLeitores[linhaAtualLeitor].QuantosLivrosComLeitor; 
 
@@ -218,11 +221,15 @@ namespace apBiblioteca
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para selecionar um livro e verificar se há algum leitor com esse livro emprestado
         private void dgvLivro_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if(osLivros[Convert.ToInt32(dgvLivro.CurrentRow.Index)].CodigoLeitorComLivro != "0000000") // livro está emprestado?
             {
-                osLeitores[linhaLeitor].CodigoLivroComLeitor[osLeitores[linhaLeitor].QuantosLivrosComLeitor] = dgvLivro.CurrentRow.Cells[0].Value.ToString();
+                int qtdLivros = osLeitores[linhaLeitor].QuantosLivrosComLeitor;
+                osLeitores[linhaLeitor].CodigoLivroComLeitor[qtdLivros] = dgvLivro.CurrentRow.Cells[0].Value.ToString();
 
                 // Procura qual é o registro que o livro selecionado está
                 // através da busca e comparação das chaves 
@@ -290,6 +297,13 @@ namespace apBiblioteca
                 osLeitores.Incluir(novoLeitor, linhaLeitor);  // Inclui o novo  registro desse leitor no arquivo texto 
 
                 AtualizarTela(); // Exibi os dados de livros e leitores após a devolução ter sido construida
+                if(osLeitores[linhaLeitor].QuantosLivrosComLeitor > 0)
+                    ExibirLivroDevolucao();
+                else
+                {
+                    dgvLivro.Rows.Clear();
+                    dgvLeitor.Rows.Clear();
+                }
             }
             catch(Exception erro)
             {

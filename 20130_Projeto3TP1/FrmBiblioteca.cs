@@ -66,10 +66,6 @@ namespace apBiblioteca
             }
         }
 
-        private void simToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
 
         private void livrosAtrasadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -87,6 +83,11 @@ namespace apBiblioteca
                 frmLivrosEmprestados = new FrmLivrosEmprestados();
                 frmLivrosEmprestados.Show();
             }
+        }
+
+        private void simToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
