@@ -104,10 +104,18 @@ namespace apBiblioteca
 
             qtosDados--;
 
-            for (int indice = posicao; indice < qtosDados; indice++)
+            if (posicao == 0)
             {
-                dados[indice] = dados[indice + 1];
+                dados[posicao] = default;
             }
+            else
+            {
+                for (int indice = posicao; indice < qtosDados; indice++)
+                {
+                    dados[indice] = dados[indice + 1];
+                }
+            }
+
 
             if (posicaoAtual >= qtosDados)
             {

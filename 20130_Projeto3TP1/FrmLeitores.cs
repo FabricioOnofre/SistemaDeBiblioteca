@@ -79,7 +79,7 @@ namespace apBiblioteca
                     // O parâmetro ondeLivro é retornado com o índice desse livro no
                     // vetor dados interno a osLivros.
                     var livroProc = new Livro(osLeitores[osLeitores.PosicaoAtual].CodigoLivroComLeitor[indLivro]);
-                    if (osLivros.Existe( livroProc, out ondeLivro))
+                    if (osLivros.Existe(livroProc, out ondeLivro))
                     {
                         // acessamos, no vetor dados de osLivros, a entidade armazenada
                         // na posicao ondeLivro para então acessar o registro de livro
@@ -90,6 +90,12 @@ namespace apBiblioteca
                 }
                 osLeitores.ExibirDados(lbLeitores);
                 stlbMensagem.Text = $"Mensagem: Registro {osLeitores.PosicaoAtual + 1} / {osLeitores.Tamanho}";
+            }
+            else
+            {
+                txtCodigoLeitor.Text = null;
+                txtNomeLeitor.Text = null;
+                txtEndereco.Text = null;
             }
             TestarBotoes();
         }
@@ -108,13 +114,13 @@ namespace apBiblioteca
                         {
                             // Instancia um objeto da classe Leitor, com a quantidade livros 0 e os códigos de livros vazios.
                             // para que depois possamos fazer empréstimos com esse leitor.
-                            var novoLeitor = new Leitor(txtCodigoLeitor.Text, txtNomeLeitor.Text,txtEndereco.Text,
+                            var novoLeitor = new Leitor(txtCodigoLeitor.Text, txtNomeLeitor.Text, txtEndereco.Text,
                             0, new string[5]);
 
-                            osLeitores.Incluir(novoLeitor, posicaoDeInclusao);   // inclui um novo registro de leitor no arquivo texto 
-                            osLeitores.SituacaoAtual = Situacao.navegando;       // programa entra no modo de navegação
-                            osLeitores.PosicaoAtual = posicaoDeInclusao;         // reposiciona no novo registro de leitor
-                            btnCancelar.PerformClick();                          // atualiza a tela para mostrar o novo leitor
+                            osLeitores.Incluir(novoLeitor, posicaoDeInclusao);  // inclui um novo registro de leitor no arquivo texto 
+                            osLeitores.SituacaoAtual = Situacao.navegando;   // programa entra no modo de navegação
+                            osLeitores.PosicaoAtual = posicaoDeInclusao;    // reposiciona no novo registro de leitor
+                            btnCancelar.PerformClick();                         // atualiza a tela para mostrar o novo leitor
                         }
                         break;
 
@@ -127,11 +133,11 @@ namespace apBiblioteca
                         }
                         break;
                 }
-                txtCodigoLeitor.ReadOnly = true;  // usuário nao poderá mais digitasr nesese campo a menos que pressione [Novo]
-                txtCodigoLeitor.Enabled = false;  // usuário nao poderá mais entrar nesse campo atépressionar [Novo] ou [Buscar]
-                btnSalvar.Enabled = false;        // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
+                txtCodigoLeitor.ReadOnly = true;    // usuário nao poderá mais digitasr nesese campo a menos que pressione [Novo]
+                txtCodigoLeitor.Enabled = false;    // usuário nao poderá mais entrar nesse campo atépressionar [Novo] ou [Buscar]
+                btnSalvar.Enabled = false;    // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
             }
-            catch(Exception erro)
+            catch (Exception erro)
             {
                 MessageBox.Show("Erro de arquivo: " + erro.Message);
             }
@@ -147,8 +153,7 @@ namespace apBiblioteca
             {
                 // se conseguiu converter o código digitada
                 // ou se ela não está em branco
-                if (txtCodigoLeitor.Text == "" || txtCodigoLeitor.Text == " " || txtCodigoLeitor.Text == "  " || txtCodigoLeitor.Text == "   " || txtCodigoLeitor.Text == "    "
-                && txtCodigoLeitor.Text == "     " || txtCodigoLeitor.Text == "     " || txtCodigoLeitor.Text == "      " || txtCodigoLeitor.Text == "       ")
+                if (!String.IsNullOrEmpty(txtCodigoLeitor.Text) && !String.IsNullOrWhiteSpace(txtCodigoLeitor.Text))
                 {
                     MessageBox.Show("Digite um código de leitor válido!");
                     txtCodigoLeitor.Focus();
@@ -168,7 +173,7 @@ namespace apBiblioteca
                                 else // nao está cadastrado, podemos continuar incluindo esse livro 
                                 {
                                     btnSalvar.Enabled = true;
-                                    txtNomeLeitor.Focus(); 
+                                    txtNomeLeitor.Focus();
                                     stlbMensagem.Text = "Mensagem: Digite os demais dados";
                                 }
                             }
@@ -179,13 +184,14 @@ namespace apBiblioteca
                                 int ondeExibir;
                                 if (osLeitores.Existe(leitorProc, out ondeExibir))
                                 {
-                                    osLeitores.PosicaoAtual = ondeExibir; // o parâmetro ondeExibir recebeu o índice de onde está o leitor procurado
+                                    // o parâmetro ondeExibir recebeu o índice de onde está o leitor procurado
+                                    osLeitores.PosicaoAtual = ondeExibir;
                                     AtualizarTela(); // o leitor procurdo é exibido na tela
                                 }
                                 else  // leitor não está cadastrado
                                 {
                                     MessageBox.Show("Código de leitor não encontrado!");
-                                    btnCancelar.PerformClick(); 
+                                    btnCancelar.PerformClick();
                                 }
                             }
                             break;
@@ -193,7 +199,7 @@ namespace apBiblioteca
                     txtCodigoLeitor.ReadOnly = true; // usuário nao poderá mais digitar nesese campo a menos que pressione [Novo] ou [Buscar]
                 }
             }
-            catch(Exception erro)
+            catch (Exception erro)
             {
                 MessageBox.Show("Erro de arquivo: " + erro.Message);
             }
@@ -206,15 +212,12 @@ namespace apBiblioteca
         // Método para deixar o programa no modo de inclusão
         private void btnNovo_Click(object sender, EventArgs e)
         {
-            // saímos da navegação e entramos no modo de inclusão:
-            osLeitores.SituacaoAtual = Situacao.incluindo;
-            // preparamos a tela para que seja possível digitar dados do novo funcionário
+            osLeitores.SituacaoAtual    = Situacao.incluindo;
+            txtCodigoLeitor.ReadOnly    = false;
+            btnSalvar.Enabled           = false;
+            txtCodigoLeitor.Enabled     = true;
             LimparTela();
-            // colocamos o cursor no campo chave
             txtCodigoLeitor.Focus();
-            txtCodigoLeitor.ReadOnly = false;
-            btnSalvar.Enabled = false;
-            txtCodigoLeitor.Enabled = true;
             stlbMensagem.Text = "Mensagem: Digite o código do novo leitor";
         }
         /*-----------------------------------------------------------------------------------------------------*/
@@ -230,6 +233,10 @@ namespace apBiblioteca
             btnAnterior.Enabled = true;
             btnProximo.Enabled = true;
             btnUltimo.Enabled = true;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            btnBuscar.Enabled = true;
+            txtCodigoLeitor.Enabled = true;
 
             if (osLeitores.EstaNoInicio)
             {
@@ -241,6 +248,14 @@ namespace apBiblioteca
             {
                 btnProximo.Enabled = false;
                 btnUltimo.Enabled = false;
+            }
+
+            if (osLeitores.EstaVazio)
+            {
+                btnEditar.Enabled = false;
+                btnExcluir.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtCodigoLeitor.Enabled = false;
             }
         }
         /*-----------------------------------------------------------------------------------------------------*/
@@ -292,14 +307,12 @@ namespace apBiblioteca
             }
             else // não tem empréstimos, podemos continuar excluindo esse leitor
             {
-                if (MessageBox.Show("Deseja realmente excluir?", "Exclusão",MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (MessageBox.Show("Deseja realmente excluir?", "Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    osLeitores.Excluir(osLeitores.PosicaoAtual); // Exclui o leitor selecionado
-                    if (osLeitores.PosicaoAtual >= osLeitores.Tamanho)
-                    {
-                        osLeitores.PosicionarNoUltimo();
-                        AtualizarTela();    // Atualiza a tela com os dados do próximo leitor do arquivo
-                    }
+                    osLeitores.Excluir(osLeitores.PosicaoAtual);    // Exclui o leitor selecionado
+                    btnProximo.PerformClick();
+                    AtualizarTela();                                // Atualiza a tela com os dados do próximo leitor do arquivo
+
                 }
             }
         }
@@ -347,9 +360,9 @@ namespace apBiblioteca
                 osLeitores.SituacaoAtual = Situacao.editando;  // programa entra no modo de edição
                 txtCodigoLeitor.ReadOnly = true;               // não deixa usuário alterar o código (prime key)
                 txtNomeLeitor.Focus();
-                btnSalvar.Enabled = true;                     
+                btnSalvar.Enabled = true;
                 stlbMensagem.Text = "Mensagem: Digite os dados atualizados pressione [Salvar] para registrá-los.";
-            }            
+            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
