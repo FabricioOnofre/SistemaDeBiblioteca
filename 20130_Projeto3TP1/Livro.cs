@@ -10,16 +10,16 @@ namespace apBiblioteca
     class Livro : IRegistro, IComparable<Livro>
     {
         public const int tamanhoCodigoLivro = 7;
-        const int tamanhoTitulo = 30;
-        const int tamanhoTipo = TipoLivro.tamanhoCodigoLivro;
-        const int tamanhoData = 10;   // dd/mm/aaaa
-        const int tamanhoCodigoLeitor = Leitor.tamanhoCodigoLeitor;
+        const int tamanhoTitulo             = 30;
+        const int tamanhoTipo               = TipoLivro.tamanhoCodigoLivro;
+        const int tamanhoData               = 10;   // dd/mm/aaaa
+        const int tamanhoCodigoLeitor       = Leitor.tamanhoCodigoLeitor;
 
-        const int inicioCodigoLivro = 0;
-        const int inicioTitulo = inicioCodigoLivro + tamanhoCodigoLivro;
-        const int inicioTipo = inicioTitulo + tamanhoTitulo;
-        const int inicioData = inicioTipo + tamanhoTipo;
-        const int inicioCodigoLeitor = inicioData + tamanhoData;
+        const int inicioCodigoLivro         = 0;
+        const int inicioTitulo              = inicioCodigoLivro + tamanhoCodigoLivro;
+        const int inicioTipo                = inicioTitulo      + tamanhoTitulo;
+        const int inicioData                = inicioTipo        + tamanhoTipo;
+        const int inicioCodigoLeitor        = inicioData        + tamanhoData;
 
         string codigoLivro;
         string tituloLivro;
@@ -38,11 +38,11 @@ namespace apBiblioteca
 
         public Livro(string livro, string titulo, byte tipo, DateTime data, string leitor)
         {
-            CodigoLivro = livro;
-            TituloLivro = titulo;
-            TipoDoLivro = tipo;
-            DataDevolucao = data;
-            CodigoLeitorComLivro = leitor;
+            CodigoLivro             = livro;
+            TituloLivro             = titulo;
+            TipoDoLivro             = tipo;
+            DataDevolucao           = data;
+            CodigoLeitorComLivro    = leitor;
         }
 
         public int CompareTo(Livro other)
@@ -60,12 +60,12 @@ namespace apBiblioteca
         {
             if (!arq.EndOfStream)
             {
-                String linha = arq.ReadLine();
-                CodigoLivro = linha.Substring(inicioCodigoLivro, tamanhoCodigoLivro);
-                TituloLivro = linha.Substring(inicioTitulo, tamanhoTitulo);
-                TipoDoLivro   = byte.Parse(linha.Substring(inicioTipo, tamanhoTipo));
-                DataDevolucao = DateTime.Parse(linha.Substring(inicioData, tamanhoData));
-                CodigoLeitorComLivro = linha.Substring(inicioCodigoLeitor, tamanhoCodigoLeitor);
+                String linha            = arq.ReadLine();
+                CodigoLivro             = linha.Substring(inicioCodigoLivro, tamanhoCodigoLivro);
+                TituloLivro             = linha.Substring(inicioTitulo, tamanhoTitulo);
+                TipoDoLivro             = byte.Parse(linha.Substring(inicioTipo, tamanhoTipo));
+                DataDevolucao           = DateTime.Parse(linha.Substring(inicioData, tamanhoData));
+                CodigoLeitorComLivro    = linha.Substring(inicioCodigoLeitor, tamanhoCodigoLeitor);
             }
         }
         public string CodigoLivro
@@ -75,7 +75,7 @@ namespace apBiblioteca
             {
                 if (value.Length > tamanhoCodigoLivro)
                 {
-                    value = value.Substring(0, tamanhoCodigoLivro);
+                    value   = value.Substring(0, tamanhoCodigoLivro);
                 }
                 codigoLivro = value.PadLeft(tamanhoCodigoLivro, '0');   
             }
@@ -87,7 +87,7 @@ namespace apBiblioteca
             {
                 if (value.Length > tamanhoTitulo)
                 {
-                    value = value.Substring(0, tamanhoTitulo);
+                    value   = value.Substring(0, tamanhoTitulo);
                 }
                 tituloLivro = value.PadRight(tamanhoTitulo, ' ');
             }

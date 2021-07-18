@@ -3,9 +3,15 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace apBiblioteca
-{
+{        
+    // Autor: Fabricio Onofre Rezende de Camargo
+
     public partial class FrmLeitores : Form
     {
+        public FrmLeitores()
+        {
+            InitializeComponent();
+        }
 
 
         /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
@@ -18,13 +24,9 @@ namespace apBiblioteca
 
         /*************************************************************************************************************/
 
-        public FrmLeitores()
-        {
-            InitializeComponent();
-        }
+
 
         /**************************************    MÉTODOS DA CLASSE        *****************************************/
-
 
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para a leitura dos arquivos txt, após o formulário ser aberto

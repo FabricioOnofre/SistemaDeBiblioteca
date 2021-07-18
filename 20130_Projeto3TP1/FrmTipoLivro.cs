@@ -53,7 +53,6 @@ namespace apBiblioteca
                                     {
                                         txtDescricaoLivro.Focus();  // cursor é posicionado no campo de digitaçao do nome do funcionário
                                         stlbMensagem.Text = "mensagem: Digite o título do novo livro";
-                                        btnSalvar.Enabled = true;
                                     }
                                     break;
                                 }
@@ -99,7 +98,6 @@ namespace apBiblioteca
             }
         }
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a leitura dos arquivos txt, após o formulário ser aberto
 
 
 
@@ -144,17 +142,24 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para a atualização das informações do formularioe e exibindo a versão mais recente do arquivo tipoLivro.txt
         private void AtualizarTela()
-        {
+        {            
+
             if (!osTipos.EstaVazio)
             {
                 int indice = osTipos.PosicaoAtual;
                 txtCodigoTipoLivro.Text = $"{osTipos[indice].CodigoTipoLivro}"; // atributo chave 
                 txtDescricaoLivro.Text = $"{osTipos[indice].DescricaoDoLivro}"; // atributo descrição do livro
 
-                TestarBotoes(); // Habilita os botões de acordo com a necessidade do usuario
                 stlbMensagem.Text = $"Mensagem: Registro {(osTipos.PosicaoAtual + 1)} / {osTipos.Tamanho}";
                 osTipos.ExibirDados(lbTipoLivro);
+            }            
+            else
+            {
+                LimparTela();
+                lbTipoLivro.Items.Clear();
             }
+            TestarBotoes(); // Habilita os botões de acordo com a necessidade do usuario
+
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
@@ -165,6 +170,7 @@ namespace apBiblioteca
         private void btnNovo_Clic(object sender, EventArgs e)
         {
             txtCodigoTipoLivro.ReadOnly = false;
+            txtCodigoTipoLivro.Enabled = true;
             osTipos.SituacaoAtual = Situacao.incluindo; // programa entrou no modo de inclusão
             LimparTela();  // limpamos os campos da tela para deixá-los prontos para digitação
             stlbMensagem.Text = "Mensagem: Digite o novo código de livro e pressione a tecla [Tab] para continuar";  // mensagem orientando o usuário
@@ -229,7 +235,7 @@ namespace apBiblioteca
             btnSalvar.Enabled = false;
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
+        
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -244,6 +250,7 @@ namespace apBiblioteca
             btnSalvar.Enabled = false;
         }
         /*-----------------------------------------------------------------------------------------------------*/
+
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -262,10 +269,15 @@ namespace apBiblioteca
         // Método para habilitar somente os botões correspondentes ao modo atual do programa  
         private void TestarBotoes()
         {
+            // Habilita os botões do menu de acordo com a necessidade do usuario
             btnInicio.Enabled = true;
             btnAnterior.Enabled = true;
             btnProximo.Enabled = true;
             btnUltimo.Enabled = true;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            btnBuscar.Enabled = true;
+            txtCodigoTipoLivro.Enabled = true;
 
             if (osTipos.EstaNoInicio)
             {
@@ -277,6 +289,14 @@ namespace apBiblioteca
             {
                 btnProximo.Enabled = false;
                 btnUltimo.Enabled = false;
+            }
+
+            if (osTipos.EstaVazio)
+            {
+                btnEditar.Enabled = false;
+                btnExcluir.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtCodigoTipoLivro.Enabled = false;
             }
         }
         /*-----------------------------------------------------------------------------------------------------*/
@@ -297,21 +317,27 @@ namespace apBiblioteca
         // Método para exclusão de uma categoria de livro no arquivo tipoLivro.txt
         private void btnExcluir_Click_1(object sender, EventArgs e)
         {
-            int indice;
-            for (indice = 0; indice < osLivros.Tamanho; indice++) // Percorre todos os livros para saber se a categoria está sendo usada
+            int  indice = 0;
+            bool achou  = false;
+            if(!osLivros.EstaVazio)
             {
-                //       Foreing Key             ==           Prime Key
-                if (osLivros[indice].TipoDoLivro == osTipos[osTipos.PosicaoAtual].CodigoTipoLivro) // tipo de livro está sendo usado?
+                for (indice = 0; indice < osLivros.Tamanho; indice++) // Percorre todos os livros para saber se a categoria está sendo usada
                 {
-                    MessageBox.Show("Não é possível concluir a exclusão, pois existem livros que estão registrados com esse tipo de livro.");
-                    indice = osLivros.Tamanho + 10;
+                    //       Foreing Key             ==           Prime Key
+                    if (osLivros[indice].TipoDoLivro == osTipos[osTipos.PosicaoAtual].CodigoTipoLivro) // tipo de livro está sendo usado?
+                    {
+                        MessageBox.Show("Não é possível concluir a exclusão, pois existem livros que estão registrados com esse tipo de livro.");
+                        achou = true;
+                    }
                 }
             }
-            if (indice == osLivros.Tamanho)  // Se chegou ao final do arquivo e não achou relação entre as chaves, pode-se excluir o tipo 
+            
+            if (!achou)  // Se chegou ao final do arquivo e não achou relação entre as chaves, pode-se excluir o tipo 
             {
                 if (MessageBox.Show("Deseja realmente excluir?", "Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     osTipos.Excluir(osTipos.PosicaoAtual); // Exclui o tipo de livro selecionado
+                    btnProximo.PerformClick();
                     AtualizarTela(); // Atualiza a tela com os dados do próximo tipo de livro do arquivo
                 }
             }
@@ -400,6 +426,56 @@ namespace apBiblioteca
         private void txtCodigoTipoLivro_TextChanged(object sender, EventArgs e)
         {
             txtCodigoTipoLivro.Text = txtCodigoTipoLivro.Text.Trim();
+        }
+
+        private void txtDescricaoLivro_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                // se conseguiu converter a matricula digitada
+                // ou se ela não está em branco
+                if (!String.IsNullOrEmpty(txtDescricaoLivro.Text) && !String.IsNullOrWhiteSpace(txtDescricaoLivro.Text))
+                {
+                    byte codigo = byte.Parse(txtCodigoTipoLivro.Text);
+                    if (codigo > 0 && codigo < 255) // se o código digitado é valido
+                    {
+                        codigo = byte.Parse(txtCodigoTipoLivro.Text);
+                        var procurado = new TipoLivro(codigo);
+
+                        if(osTipos.SituacaoAtual == Situacao.incluindo)
+                        {
+                            if (osTipos.Existe(procurado, out posicaoDeInclusao)) // categoria já cadastrada?
+                            {
+                                MessageBox.Show("Código já existe. Não pode ser incluído novamente!");
+                                btnCancelar.PerformClick();  // cancela a operação de inclusão
+                            }
+                            else  // o parâmetro posicaoDeInclusao recebeu o índice de onde a nova matrícula deveria estar no vetor dados
+                            {
+                                btnSalvar.Enabled = true;
+                            }
+                        }
+                    }
+                    else // o código não é valido
+                    {
+                        txtCodigoTipoLivro.Text = null;
+                        btnCancelar.PerformClick(); // programa volta pro modo de navegãção
+                        MessageBox.Show(" Operação cancelada, digite um código que esteja entre 0 e 255!");
+                    }
+
+                }
+                else
+                {
+                    txtCodigoTipoLivro.Text = null;
+                    MessageBox.Show("Descrição inválida. Digite corretamente!");
+                    txtCodigoTipoLivro.Focus();
+                }
+            }
+            catch (Exception erro)
+            {
+                txtCodigoTipoLivro.Focus();
+                txtCodigoTipoLivro.Text = null;
+                MessageBox.Show("Erro de arquivo: " + erro.Message);
+            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 

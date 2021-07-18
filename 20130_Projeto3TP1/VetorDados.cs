@@ -102,20 +102,13 @@ namespace apBiblioteca
                 throw new Exception("Índice fora dos limites!");
             }
 
+
+            for (int indice = posicao; indice < qtosDados; indice++)
+            {
+                dados[indice] = dados[indice + 1];
+            }
+                
             qtosDados--;
-
-            if (posicao == 0)
-            {
-                dados[posicao] = default;
-            }
-            else
-            {
-                for (int indice = posicao; indice < qtosDados; indice++)
-                {
-                    dados[indice] = dados[indice + 1];
-                }
-            }
-
 
             if (posicaoAtual >= qtosDados)
             {

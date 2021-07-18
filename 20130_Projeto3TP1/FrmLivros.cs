@@ -324,6 +324,7 @@ namespace apBiblioteca
             }
             else  // nao está emprestado, podemos continuar excluindo esse leitor
             {
+                
                 if (MessageBox.Show("Deseja realmente excluir?", "Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     osLivros.Excluir(osLivros.PosicaoAtual); // Exclui o livro selecionado

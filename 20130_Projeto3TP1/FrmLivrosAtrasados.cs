@@ -4,21 +4,30 @@ using System.Windows.Forms;
 
 namespace apBiblioteca
 {
+
+    // Autor: Fabricio Onofre Rezende de Camargo
+
     public partial class FrmLivrosAtrasados : Form
     {
-        VetorDados<Livro> osLivros;
-        VetorDados<Leitor> osLeitores;
-        VetorDados<TipoLivro> osTipos;
-
-
-        int linhaLeitor = -1;
-        int linhaLivro = -1;
-
         public FrmLivrosAtrasados()
         {
             InitializeComponent();
         }
 
+        /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
+
+        VetorDados<Livro> osLivros;
+        VetorDados<Leitor> osLeitores;
+        VetorDados<TipoLivro> osTipos;
+
+        /*************************************************************************************************************/
+
+
+
+        /**************************************    MÉTODOS DA CLASSE        *****************************************/
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
         private void FrmLivrosAtrasados_Load(object sender, EventArgs e)
         {
             // Exibi os dados atualizados dos arquivos textos
@@ -33,7 +42,12 @@ namespace apBiblioteca
 
             AtualizarTela(); // Apresenta os dados atualizados do leitor e do livro após o empréstimo concluido
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a atualização do datagridview para que assim exiba a versão mais recente dos arquivo de livros
         private void AtualizarTela()
         {
             // Preenche os campos do dgvLivro com os respectivos campos de cada arquivo

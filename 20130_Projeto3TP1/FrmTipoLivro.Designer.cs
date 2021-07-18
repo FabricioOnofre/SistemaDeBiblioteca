@@ -66,6 +66,7 @@
             this.txtDescricaoLivro.Name = "txtDescricaoLivro";
             this.txtDescricaoLivro.Size = new System.Drawing.Size(306, 26);
             this.txtDescricaoLivro.TabIndex = 4;
+            this.txtDescricaoLivro.Leave += new System.EventHandler(this.txtDescricaoLivro_Leave);
             // 
             // txtCodigoTipoLivro
             // 

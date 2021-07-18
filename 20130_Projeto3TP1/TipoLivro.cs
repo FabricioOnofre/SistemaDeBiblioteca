@@ -10,10 +10,10 @@ namespace apBiblioteca
     class TipoLivro : IComparable<TipoLivro>, IRegistro
     {
         public const int tamanhoCodigoLivro = 3;
-        const int tamanhoDescricao = 20;
+        const int tamanhoDescricao          = 20;
 
-        const int inicioCodigoTipoLivro = 0;
-        const int inicioDescricaoLivro = inicioCodigoTipoLivro + tamanhoCodigoLivro;
+        const int inicioCodigoTipoLivro     = 0;
+        const int inicioDescricaoLivro      = inicioCodigoTipoLivro + tamanhoCodigoLivro;
 
         string descricaoTipo;
         byte tipoDoLivro;
@@ -30,8 +30,8 @@ namespace apBiblioteca
 
         public TipoLivro(byte tipo, string descricao)
         {
-            CodigoTipoLivro = tipo;
-            DescricaoDoLivro = descricao;
+            CodigoTipoLivro     = tipo;
+            DescricaoDoLivro    = descricao;
         }
 
         public byte CodigoTipoLivro
@@ -44,7 +44,7 @@ namespace apBiblioteca
                     string tipo = Convert.ToString(value);
                     if (tipo.Length > tamanhoCodigoLivro)
                     {
-                        tipo = tipo.PadLeft(tamanhoCodigoLivro, '0').Substring(0, tamanhoCodigoLivro);
+                        tipo    = tipo.PadLeft(tamanhoCodigoLivro, '0').Substring(0, tamanhoCodigoLivro);
                     }
                     tipoDoLivro = Convert.ToByte(tipo.PadLeft(tamanhoCodigoLivro, '0'));
                 }
@@ -61,9 +61,9 @@ namespace apBiblioteca
         {
             if (!arq.EndOfStream)
             {
-                String linha = arq.ReadLine();
-                CodigoTipoLivro = byte.Parse(linha.Substring(inicioCodigoTipoLivro, tamanhoCodigoLivro));
-                DescricaoDoLivro = linha.Substring(inicioDescricaoLivro); 
+                String linha        = arq.ReadLine();
+                CodigoTipoLivro     = byte.Parse(linha.Substring(inicioCodigoTipoLivro, tamanhoCodigoLivro));
+                DescricaoDoLivro    = linha.Substring(inicioDescricaoLivro); 
             }
         }
 

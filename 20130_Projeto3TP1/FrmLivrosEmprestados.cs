@@ -6,19 +6,46 @@ namespace apBiblioteca
 {
     public partial class FrmLivrosEmprestados : Form
     {
-        VetorDados<Livro> osLivros;
-        VetorDados<Leitor> osLeitores;
-        VetorDados<TipoLivro> osTipos;
-
-
-        int linhaLeitor = -1;
-        int linhaLivro = -1;
 
         public FrmLivrosEmprestados()
         {
             InitializeComponent();
         }
 
+        /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
+
+        VetorDados<Livro> osLivros;
+        VetorDados<Leitor> osLeitores;
+        VetorDados<TipoLivro> osTipos;
+
+        /*************************************************************************************************************/
+
+
+
+        /**************************************    MÉTODOS DA CLASSE        *****************************************/
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
+        private void FrmLivrosEmprestados_Load(object sender, EventArgs e)
+        {
+            // Faz a leitura dos arquivos textos
+            osLivros = new VetorDados<Livro>(50);
+            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+
+            osLeitores = new VetorDados<Leitor>(50);
+            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+
+            osTipos = new VetorDados<TipoLivro>(50);
+            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+
+            AtualizarTela(); // Exibi 
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
         void AtualizarTela()
         {
             // Preenche os campos do dgvLivro com os respectivos campos de cada arquivo
@@ -76,21 +103,9 @@ namespace apBiblioteca
                 }
             }
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
-        private void FrmLivrosEmprestados_Load(object sender, EventArgs e)
-        {
-            // Faz a leitura dos arquivos textos
-            osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
-
-            osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
-
-            osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
-
-            AtualizarTela(); // Exibi 
-        }
+        /*************************************************************************************************************/
     }
 }
 

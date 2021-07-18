@@ -5,7 +5,14 @@ using System.Windows.Forms;
 namespace apBiblioteca
 {
     public partial class FrmEmprestimo : Form
-    {
+    {        
+        public FrmEmprestimo()
+        {
+            InitializeComponent();
+        }
+
+        /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
+
         VetorDados<Livro> osLivros;
         VetorDados<Leitor> osLeitores;
         VetorDados<TipoLivro> osTipos;
@@ -13,11 +20,14 @@ namespace apBiblioteca
         int linhaLeitor = -1;
         int linhaLivro = -1;
 
-        public FrmEmprestimo()
-        {
-            InitializeComponent();
-        }
+        /*************************************************************************************************************/
 
+
+
+        /**************************************    MÉTODOS DA CLASSE        *****************************************/
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
         private void FrmEmprestimo_Load(object sender, EventArgs e)
         {
             // Leitura dos arquivos textos
@@ -34,7 +44,12 @@ namespace apBiblioteca
 
             AtualizarTela();  // Exibi os dados iniciais dos arquivos textos 
         }
+        /*-----------------------------------------------------------------------------------------------------*/
 
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a atualização do datagridview para que assim exiba a versão mais recente dos arquivos txt
         private void AtualizarTela()
         {
             // Exibi os dados atualizados dos leitores e livros

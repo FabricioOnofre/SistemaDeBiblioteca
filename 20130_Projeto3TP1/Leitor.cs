@@ -9,18 +9,18 @@ namespace apBiblioteca
 {
     class Leitor : IComparable<Leitor>, IRegistro
     {
-        public const int tamanhoCodigoLeitor = 6;
-        const int tamanhoNome = 35;
-        const int tamanhoEndereco = 50;
-        const int tamanhoQuantosLivros = 2;
-        const int tamanhoCodigoLivro = Livro.tamanhoCodigoLivro;
-        const int maximoLivrosComLeitor = 5;
+        public const int tamanhoCodigoLeitor    = 6;
+        const int tamanhoNome                   = 35;
+        const int tamanhoEndereco               = 50;
+        const int tamanhoQuantosLivros          = 2;
+        const int tamanhoCodigoLivro            = Livro.tamanhoCodigoLivro;
+        const int maximoLivrosComLeitor         = 5;
 
-        const int inicioCodigoLeitor = 0;
-        const int inicioNome = inicioCodigoLeitor + tamanhoCodigoLeitor;
-        const int inicioEndereco = inicioNome + tamanhoNome;
-        const int inicioQuantosLivros = inicioEndereco + tamanhoEndereco;
-        const int inicioCodigosLivros = inicioQuantosLivros + tamanhoQuantosLivros;
+        const int inicioCodigoLeitor            = 0;
+        const int inicioNome                    = inicioCodigoLeitor + tamanhoCodigoLeitor;
+        const int inicioEndereco                = inicioNome + tamanhoNome;
+        const int inicioQuantosLivros           = inicioEndereco + tamanhoEndereco;
+        const int inicioCodigosLivros           = inicioQuantosLivros + tamanhoQuantosLivros;
 
         string codigoLeitor;
         string nomeLeitor;
@@ -38,11 +38,11 @@ namespace apBiblioteca
         }
         public Leitor(string leitor, string nome, string endereco, byte quantos, string[] livros)
         {
-            CodigoLeitor = leitor;
-            NomeLeitor = nome;
-            EnderecoLeitor = endereco;
-            QuantosLivrosComLeitor = quantos;
-            CodigoLivroComLeitor = livros;
+            CodigoLeitor            = leitor;
+            NomeLeitor              = nome;
+            EnderecoLeitor          = endereco;
+            QuantosLivrosComLeitor  = quantos;
+            CodigoLivroComLeitor    = livros;
         }
 
 
@@ -113,7 +113,7 @@ namespace apBiblioteca
 
             for (int indice = 0; indice < QuantosLivrosComLeitor; indice++)
             {
-                saida = saida + CodigoLivroComLeitor[indice];
+                saida   = saida + CodigoLivroComLeitor[indice];
             }
 
             return saida;
@@ -123,12 +123,13 @@ namespace apBiblioteca
         {
             if (!arq.EndOfStream)
             {
-                String linha = arq.ReadLine();
-                CodigoLeitor = linha.Substring(inicioCodigoLeitor, tamanhoCodigoLeitor);
-                NomeLeitor = linha.Substring(inicioNome, tamanhoNome);
-                EnderecoLeitor = linha.Substring(inicioEndereco, tamanhoEndereco);
-                QuantosLivrosComLeitor = byte.Parse(linha.Substring(inicioQuantosLivros, tamanhoQuantosLivros));
-                CodigoLivroComLeitor = new string[maximoLivrosComLeitor];
+                String linha            = arq.ReadLine();
+                CodigoLeitor            = linha.Substring(inicioCodigoLeitor, tamanhoCodigoLeitor);
+                NomeLeitor              = linha.Substring(inicioNome, tamanhoNome);
+                EnderecoLeitor          = linha.Substring(inicioEndereco, tamanhoEndereco);
+                QuantosLivrosComLeitor  = byte.Parse(linha.Substring(inicioQuantosLivros, tamanhoQuantosLivros));
+                CodigoLivroComLeitor    = new string[maximoLivrosComLeitor];
+
                 for (int indice = 0; indice < QuantosLivrosComLeitor; indice++)
                 {
                    CodigoLivroComLeitor[indice] = linha.Substring(inicioCodigosLivros + tamanhoCodigoLivro * indice, tamanhoCodigoLivro);
@@ -142,7 +143,7 @@ namespace apBiblioteca
                            QuantosLivrosComLeitor.ToString().PadLeft(tamanhoQuantosLivros, ' ');
             for (int indice = 0; indice < QuantosLivrosComLeitor; indice++)
             {
-                saida += " " + CodigoLivroComLeitor[indice];
+                saida   += " " + CodigoLivroComLeitor[indice];
             }
             return saida;
         }

@@ -39,7 +39,7 @@
             this.empréstimosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.devoluçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.livrosAtrasadpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.livroEmprestadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.livrosAtrasadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nãoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,26 +81,26 @@
             // livrosToolStripMenuItem
             // 
             this.livrosToolStripMenuItem.Name = "livrosToolStripMenuItem";
-            this.livrosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.livrosToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.livrosToolStripMenuItem.Text = "Livros";
             this.livrosToolStripMenuItem.Click += new System.EventHandler(this.livrosToolStripMenuItem_Click);
             // 
             // leitoresToolStripMenuItem
             // 
             this.leitoresToolStripMenuItem.Name = "leitoresToolStripMenuItem";
-            this.leitoresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.leitoresToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.leitoresToolStripMenuItem.Text = "Leitores";
             this.leitoresToolStripMenuItem.Click += new System.EventHandler(this.leitoresToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(172, 6);
             // 
             // tipoLivroToolStripMenuItem
             // 
             this.tipoLivroToolStripMenuItem.Name = "tipoLivroToolStripMenuItem";
-            this.tipoLivroToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.tipoLivroToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
             this.tipoLivroToolStripMenuItem.Text = "Categoria de Livros";
             this.tipoLivroToolStripMenuItem.Click += new System.EventHandler(this.tipoLivroToolStripMenuItem_Click);
             // 
@@ -116,37 +116,37 @@
             // empréstimosToolStripMenuItem
             // 
             this.empréstimosToolStripMenuItem.Name = "empréstimosToolStripMenuItem";
-            this.empréstimosToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.empréstimosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.empréstimosToolStripMenuItem.Text = "Empréstimos";
-            this.empréstimosToolStripMenuItem.Click += new System.EventHandler(this.empréstimosToolStripMenuItem_Click);
+            this.empréstimosToolStripMenuItem.Click += new System.EventHandler(this.emprestimosToolStripMenuItem_Click);
             // 
             // devoluçõesToolStripMenuItem
             // 
             this.devoluçõesToolStripMenuItem.Name = "devoluçõesToolStripMenuItem";
-            this.devoluçõesToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.devoluçõesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.devoluçõesToolStripMenuItem.Text = "Devoluções";
-            this.devoluçõesToolStripMenuItem.Click += new System.EventHandler(this.devoluçõesToolStripMenuItem_Click);
+            this.devoluçõesToolStripMenuItem.Click += new System.EventHandler(this.devolucoesToolStripMenuItem_Click);
             // 
             // consultasToolStripMenuItem
             // 
             this.consultasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.livrosAtrasadpsToolStripMenuItem,
+            this.livroEmprestadosToolStripMenuItem,
             this.livrosAtrasadosToolStripMenuItem});
             this.consultasToolStripMenuItem.Name = "consultasToolStripMenuItem";
             this.consultasToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
             this.consultasToolStripMenuItem.Text = "Consultas";
             // 
-            // livrosAtrasadpsToolStripMenuItem
+            // livroEmprestadosToolStripMenuItem
             // 
-            this.livrosAtrasadpsToolStripMenuItem.Name = "livrosAtrasadpsToolStripMenuItem";
-            this.livrosAtrasadpsToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-            this.livrosAtrasadpsToolStripMenuItem.Text = "Livros Emprestados";
-            this.livrosAtrasadpsToolStripMenuItem.Click += new System.EventHandler(this.livrosAtrasadpsToolStripMenuItem_Click);
+            this.livroEmprestadosToolStripMenuItem.Name = "livroEmprestadosToolStripMenuItem";
+            this.livroEmprestadosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.livroEmprestadosToolStripMenuItem.Text = "Livros Emprestados";
+            this.livroEmprestadosToolStripMenuItem.Click += new System.EventHandler(this.livrosEmprestadosToolStripMenuItem_Click);
             // 
             // livrosAtrasadosToolStripMenuItem
             // 
             this.livrosAtrasadosToolStripMenuItem.Name = "livrosAtrasadosToolStripMenuItem";
-            this.livrosAtrasadosToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.livrosAtrasadosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.livrosAtrasadosToolStripMenuItem.Text = "Livros Atrasados";
             this.livrosAtrasadosToolStripMenuItem.Click += new System.EventHandler(this.livrosAtrasadosToolStripMenuItem_Click);
             // 
@@ -203,7 +203,7 @@
         private System.Windows.Forms.ToolStripMenuItem empréstimosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem devoluçõesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem livrosAtrasadpsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem livroEmprestadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem livrosAtrasadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sairToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nãoToolStripMenuItem1;

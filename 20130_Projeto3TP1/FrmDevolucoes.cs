@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace apBiblioteca
 {
-    // 20130 - Fabricio Onofre
+    // Autor: Fabricio Onofre Rezende de Camargo
 
     public partial class FrmDevolucoes : Form
     {
@@ -57,7 +57,7 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a atualização do datagridview para que assim exiba a versão mais recente dos arquivos de livros e leitores
+        // Método para a atualização do datagridview para que assim exiba a versão mais recente dos arquivos txt
         private void AtualizarTela()
         {
             if (!osLeitores.EstaVazio && !osTipos.EstaVazio && !osLivros.EstaVazio)
