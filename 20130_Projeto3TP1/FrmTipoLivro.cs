@@ -52,7 +52,8 @@ namespace apBiblioteca
                                     else  // o parâmetro posicaoDeInclusao recebeu o índice de onde a nova matrícula deveria estar no vetor dados
                                     {
                                         txtDescricaoLivro.Focus();  // cursor é posicionado no campo de digitaçao do nome do funcionário
-                                        stlbMensagem.Text = "mensagem: Digite o título do novo livro";
+                                        stlbMensagem.Text = "mensagem: Digite a descrição e" +
+                                            " pressione a tecla [Tab] para habilitar [Salvar]";
                                     }
                                     break;
                                 }
@@ -434,16 +435,17 @@ namespace apBiblioteca
             {
                 // se conseguiu converter a matricula digitada
                 // ou se ela não está em branco
-                if (!String.IsNullOrEmpty(txtDescricaoLivro.Text) && !String.IsNullOrWhiteSpace(txtDescricaoLivro.Text))
+                if(osTipos.SituacaoAtual == Situacao.incluindo)
                 {
-                    byte codigo = byte.Parse(txtCodigoTipoLivro.Text);
-                    if (codigo > 0 && codigo < 255) // se o código digitado é valido
+                    if (!String.IsNullOrEmpty(txtDescricaoLivro.Text) && !String.IsNullOrWhiteSpace(txtDescricaoLivro.Text))
                     {
-                        codigo = byte.Parse(txtCodigoTipoLivro.Text);
-                        var procurado = new TipoLivro(codigo);
-
-                        if(osTipos.SituacaoAtual == Situacao.incluindo)
+                        byte codigo = byte.Parse(txtCodigoTipoLivro.Text);
+                        if (codigo > 0 && codigo < 255) // se o código digitado é valido
                         {
+                            codigo = byte.Parse(txtCodigoTipoLivro.Text);
+                            var procurado = new TipoLivro(codigo);
+
+
                             if (osTipos.Existe(procurado, out posicaoDeInclusao)) // categoria já cadastrada?
                             {
                                 MessageBox.Show("Código já existe. Não pode ser incluído novamente!");
@@ -453,21 +455,10 @@ namespace apBiblioteca
                             {
                                 btnSalvar.Enabled = true;
                             }
-                        }
-                    }
-                    else // o código não é valido
-                    {
-                        txtCodigoTipoLivro.Text = null;
-                        btnCancelar.PerformClick(); // programa volta pro modo de navegãção
-                        MessageBox.Show(" Operação cancelada, digite um código que esteja entre 0 e 255!");
-                    }
 
-                }
-                else
-                {
-                    txtCodigoTipoLivro.Text = null;
-                    MessageBox.Show("Descrição inválida. Digite corretamente!");
-                    txtCodigoTipoLivro.Focus();
+                        }
+                       
+                    }
                 }
             }
             catch (Exception erro)

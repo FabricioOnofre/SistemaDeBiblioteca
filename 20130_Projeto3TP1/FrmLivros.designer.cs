@@ -50,6 +50,7 @@
             this.stlbMensagem = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpCadastro = new System.Windows.Forms.TabPage();
+            this.label5 = new System.Windows.Forms.Label();
             this.dgvTipoLivro = new System.Windows.Forms.DataGridView();
             this.colunaCodigo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colunaDescricao = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,7 +67,6 @@
             this.tpLista = new System.Windows.Forms.TabPage();
             this.lbLivros = new System.Windows.Forms.ListBox();
             this.imlBotoes = new System.Windows.Forms.ImageList(this.components);
-            this.label5 = new System.Windows.Forms.Label();
             this.tsBotoes.SuspendLayout();
             this.ssMensagem.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -303,6 +303,15 @@
             this.tpCadastro.TabIndex = 0;
             this.tpCadastro.Text = "Cadastro";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(158, 18);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Categorias de leitura:";
+            // 
             // dgvTipoLivro
             // 
             this.dgvTipoLivro.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -397,6 +406,7 @@
             this.txtTituloLivro.Name = "txtTituloLivro";
             this.txtTituloLivro.Size = new System.Drawing.Size(306, 26);
             this.txtTituloLivro.TabIndex = 4;
+            this.txtTituloLivro.Leave += new System.EventHandler(this.txtTituloLivro_Leave);
             // 
             // txtCodigoLivro
             // 
@@ -470,15 +480,6 @@
             this.imlBotoes.Images.SetKeyName(14, "WINNEXT.BMP");
             this.imlBotoes.Images.SetKeyName(15, "WINPREV.BMP");
             this.imlBotoes.Images.SetKeyName(16, "abort.bmp");
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 81);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(158, 18);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Categorias de leitura:";
             // 
             // FrmLivros
             // 

@@ -158,6 +158,7 @@ namespace apBiblioteca
             btnExcluir.Enabled          = true;
             btnBuscar.Enabled           = true;
             txtCodigoLivro.Enabled      = true;
+            btnSalvar.Enabled           = false;
 
             if (osLivros.EstaNoInicio)
             {
@@ -209,7 +210,7 @@ namespace apBiblioteca
                 // ou se ela não está em branco
                 if (!String.IsNullOrEmpty(txtCodigoLivro.Text) && !String.IsNullOrWhiteSpace(txtCodigoLivro.Text))
                 {
-                    var procurado = new Livro(txtCodigoLivro.Text);
+                     var procurado = new Livro(txtCodigoLivro.Text);
                     switch (osLivros.SituacaoAtual)
                     {
                         case Situacao.incluindo:
@@ -222,8 +223,7 @@ namespace apBiblioteca
                                 else  // o parâmetro posicaoDeInclusao recebeu o índice de onde o novo livro deveria estar no vetor dados
                                 {
                                     txtTituloLivro.Focus();  // cursor é posicionado no campo de digitaçao do nome do funcionário
-                                    stlbMensagem.Text = "mensagem: Digite o título do novo livro";
-                                    btnSalvar.Enabled = true;
+                                    stlbMensagem.Text = "mensagem: Digite o título do novo livro e pressione a tecla [Tab] para habilitar [Salvar]";
                                 }
                                 break;
                             }
@@ -376,6 +376,7 @@ namespace apBiblioteca
             {
                 osLivros.SituacaoAtual  = Situacao.editando;
                 txtCodigoLivro.ReadOnly = true;               // não deixa usuário alterar a matrícula (prime key)
+                txtTituloLivro.ReadOnly = false;               // não deixa usuário alterar a matrícula (prime key)
                 btnSalvar.Enabled       = true;
                 stlbMensagem.Text       = "Mensagem: Digite os dados atualizados pressione [Salvar] para registrá-los.";
                 txtTituloLivro.Focus();
@@ -441,7 +442,13 @@ namespace apBiblioteca
             if (osLivros.SituacaoAtual != Situacao.incluindo && !osLivros.EstaVazio)
             {
                 // Não deixa outro tipo de livro ficar selecionada, há não ser o do livro atual
-                dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = false;
+                if(osLivros.SituacaoAtual != Situacao.editando)
+                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = false;
+                else
+                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = true;
+
+
+
                 for (int linha = 0; linha < osTipos.Tamanho; linha++)
                 {
                     int pkTipoLivro = Convert.ToInt32(dgvTipoLivro.Rows[linha].Cells[0].Value.ToString()); // Prime Key
@@ -474,6 +481,37 @@ namespace apBiblioteca
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void txtTituloLivro_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                // se conseguiu converter a matricula digitada
+                // ou se ela não está em branco
+                if (osLivros.SituacaoAtual == Situacao.incluindo)
+                {
+                    if (!String.IsNullOrEmpty(txtTituloLivro.Text) && !String.IsNullOrWhiteSpace(txtTituloLivro.Text))
+                    {
+                       
+                        var procurado = new Livro(txtCodigoLivro.Text);
+
+                        if (osLivros.Existe(procurado, out posicaoDeInclusao)) // categoria já cadastrada?
+                        {
+                            MessageBox.Show("Código já existe. Não pode ser incluído novamente!");
+                            btnCancelar.PerformClick();  // cancela a operação de inclusão
+                        }
+                        else  // o parâmetro posicaoDeInclusao recebeu o índice de onde a nova matrícula deveria estar no vetor dados
+                        {
+                            btnSalvar.Enabled = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro de arquivo: " + erro.Message);
+            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
