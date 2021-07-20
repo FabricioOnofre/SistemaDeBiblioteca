@@ -77,7 +77,6 @@
             this.txtCodigoTipoLivro.ReadOnly = true;
             this.txtCodigoTipoLivro.Size = new System.Drawing.Size(79, 26);
             this.txtCodigoTipoLivro.TabIndex = 3;
-            this.txtCodigoTipoLivro.TextChanged += new System.EventHandler(this.txtCodigoTipoLivro_TextChanged);
             this.txtCodigoTipoLivro.Leave += new System.EventHandler(this.txtCodigoTipoLivro_Leave_1);
             // 
             // label2

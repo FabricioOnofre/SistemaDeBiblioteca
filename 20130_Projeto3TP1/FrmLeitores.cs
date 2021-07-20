@@ -14,15 +14,20 @@ namespace apBiblioteca
         }
 
 
+
+
         /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
 
-        VetorDados<Livro> osLivros;
-        VetorDados<Leitor> osLeitores;
-        VetorDados<TipoLivro> osTipos;
+        VetorDados<Livro>       osLivros;
+        VetorDados<Leitor>      osLeitores;
+        VetorDados<TipoLivro>   osTipos;
 
         int posicaoDeInclusao = -1;
 
         /*************************************************************************************************************/
+
+
+
 
 
 
@@ -32,7 +37,6 @@ namespace apBiblioteca
         // Método para a leitura dos arquivos txt, após o formulário ser aberto
         private void FrmLeitores_Load(object sender, EventArgs e)
         {
-            // Preenche os campos de identiicação do livro
             tsBotoes.ImageList = imlBotoes;
             int indice = 0;
             foreach (ToolStripItem item in tsBotoes.Items)
@@ -53,11 +57,47 @@ namespace apBiblioteca
             osTipos = new VetorDados<TipoLivro>(50);
             osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
 
-            // Posiciona o formulário para exibir o primeiro leitor cadastrado
-            btnInicio.PerformClick();
+            
+            btnInicio.PerformClick();       // Posiciona o formulário para exibir o primeiro leitor cadastrado
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exibir somente os botões correspondentes ao modo atual do programa 
+        private void TestarBotoes()
+        {
+            // Habilita os botões do menu de acordo com a necessidade do usuario
+            btnInicio.Enabled           = true;
+            btnAnterior.Enabled         = true;
+            btnProximo.Enabled          = true;
+            btnUltimo.Enabled           = true;
+            btnEditar.Enabled           = true;
+            btnExcluir.Enabled          = true;
+            btnBuscar.Enabled           = true;
+            txtCodigoLeitor.Enabled     = true;
+
+            if (osLeitores.EstaNoInicio)
+            {
+                btnInicio.Enabled       = false;
+                btnAnterior.Enabled     = false;
+            }
+
+            if (osLeitores.EstaNoFim)
+            {
+                btnProximo.Enabled      = false;
+                btnUltimo.Enabled       = false;
+            }
+
+            if (osLeitores.EstaVazio)
+            {
+                btnEditar.Enabled       = false;
+                btnExcluir.Enabled      = false;
+                btnBuscar.Enabled       = false;
+                txtCodigoLeitor.Enabled = false;
+            }
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -66,21 +106,24 @@ namespace apBiblioteca
         {
             if (!osLeitores.EstaVazio)
             {
+                int posicaoAtual = osLeitores.PosicaoAtual;
+
                 // Preenche os campos de identiicação do leitor
-                txtCodigoLeitor.Text = osLeitores[osLeitores.PosicaoAtual].CodigoLeitor;
-                txtNomeLeitor.Text = osLeitores[osLeitores.PosicaoAtual].NomeLeitor;
-                txtEndereco.Text = osLeitores[osLeitores.PosicaoAtual].EnderecoLeitor;
+                txtCodigoLeitor.Text    = osLeitores[posicaoAtual].CodigoLeitor;
+                txtNomeLeitor.Text      = osLeitores[posicaoAtual].NomeLeitor;
+                txtEndereco.Text        = osLeitores[posicaoAtual].EnderecoLeitor;
 
                 // Preenche e exibe os livros com o leitor 
                 txtLivros.Text = "Código            Título                             Devolução";
-                for (int indLivro = 0; indLivro < osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor; indLivro++)
+                for (int indLivro = 0; indLivro < osLeitores[posicaoAtual].QuantosLivrosComLeitor; indLivro++)
                 {
                     int ondeLivro = 0;
                     // Buscamos o livro cujo código esta em
                     // osLeitores[indice].CodigoLivroComLeitor[indLivro].
                     // O parâmetro ondeLivro é retornado com o índice desse livro no
                     // vetor dados interno a osLivros.
-                    var livroProc = new Livro(osLeitores[osLeitores.PosicaoAtual].CodigoLivroComLeitor[indLivro]);
+                    var livroProc = new Livro(osLeitores[posicaoAtual].CodigoLivroComLeitor[indLivro]);
+
                     if (osLivros.Existe(livroProc, out ondeLivro))
                     {
                         // acessamos, no vetor dados de osLivros, a entidade armazenada
@@ -91,13 +134,13 @@ namespace apBiblioteca
                     }
                 }
                 osLeitores.ExibirDados(lbLeitores);
-                stlbMensagem.Text = $"Mensagem: Registro {osLeitores.PosicaoAtual + 1} / {osLeitores.Tamanho}";
+                stlbMensagem.Text = $"Mensagem: Registro {posicaoAtual + 1} / {osLeitores.Tamanho}";
             }
             else
             {
-                txtCodigoLeitor.Text = null;
-                txtNomeLeitor.Text = null;
-                txtEndereco.Text = null;
+                txtCodigoLeitor.Text    = null;
+                txtNomeLeitor.Text      = null;
+                txtEndereco.Text        = null;
             }
             TestarBotoes();
         }
@@ -105,44 +148,15 @@ namespace apBiblioteca
 
 
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para salvar um novo leitor no arquivo leitores.txt
-        private void btnSalvar_Click(object sender, EventArgs e)
+        // Método para limpar os campos da tela para deixá-los prontos para digitação  
+        private void LimparTela()
         {
-            try
-            {
-                switch (osLeitores.SituacaoAtual)
-                {
-                    case Situacao.incluindo:
-                        {
-                            // Instancia um objeto da classe Leitor, com a quantidade livros 0 e os códigos de livros vazios.
-                            // para que depois possamos fazer empréstimos com esse leitor.
-                            var novoLeitor = new Leitor(txtCodigoLeitor.Text, txtNomeLeitor.Text, txtEndereco.Text,
-                            0, new string[5]);
-
-                            osLeitores.Incluir(novoLeitor, posicaoDeInclusao);  // inclui um novo registro de leitor no arquivo texto 
-                            osLeitores.SituacaoAtual = Situacao.navegando;   // programa entra no modo de navegação
-                            osLeitores.PosicaoAtual = posicaoDeInclusao;    // reposiciona no novo registro de leitor
-                            btnCancelar.PerformClick();                         // atualiza a tela para mostrar o novo leitor
-                        }
-                        break;
-
-                    case Situacao.editando:
-                        {
-                            // os atributos do leitor são atualizados 
-                            osLeitores[osLeitores.PosicaoAtual].NomeLeitor = txtNomeLeitor.Text;
-                            osLeitores[osLeitores.PosicaoAtual].EnderecoLeitor = txtEndereco.Text;
-                            btnCancelar.PerformClick(); // atualiza a tela para mostrar o leitor com os novos dados
-                        }
-                        break;
-                }
-                txtCodigoLeitor.ReadOnly = true;    // usuário nao poderá mais digitasr nesese campo a menos que pressione [Novo]
-                txtCodigoLeitor.Enabled = false;    // usuário nao poderá mais entrar nesse campo atépressionar [Novo] ou [Buscar]
-                btnSalvar.Enabled = false;    // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show("Erro de arquivo: " + erro.Message);
-            }
+            // Limpamos os campos da tela para deixá-los prontos para digitação            
+            txtCodigoLeitor.Clear();
+            txtNomeLeitor.Clear();
+            txtEndereco.Clear();
+            txtLivros.Clear();
+            stlbMensagem.Text = "Mensagem: ";
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
@@ -210,8 +224,22 @@ namespace apBiblioteca
 
 
 
+
+
+
+
+
+
+
+
+
+                    /********************************************************************/
+                    /******************************* CRUD *******************************/
+                    /********************************************************************/
+
+
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para deixar o programa no modo de inclusão
+        // Método para deixar o programa no modo de inclusão - CREATE
         private void btnNovo_Click(object sender, EventArgs e)
         {
             osLeitores.SituacaoAtual    = Situacao.incluindo;
@@ -225,82 +253,43 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a busca de leitores no arquivo leitores.txt - READ
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            LimparTela(); // limpamos os campos da tela para deixá-los prontos para digitação
+            osLeitores.SituacaoAtual    = Situacao.pesquisando; // o programa entrou no modo de pesquisa
+            // libera os campos para o usuario digitar o codigo do leitor procurado
+            txtCodigoLeitor.ReadOnly    = false;
+            txtCodigoLeitor.Enabled     = true;
+            txtCodigoLeitor.Focus();
+            stlbMensagem.Text           = "Mensagem: Digite a matrícula do leitor que busca";
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
 
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para exibir somente os botões correspondentes ao modo atual do programa 
-        private void TestarBotoes()
+        // Método para edição de leitores no arquivo leitores.txt - UPDATE
+        private void btnEditar_Click(object sender, EventArgs e)
         {
-            // Habilita os botões do menu de acordo com a necessidade do usuario
-            btnInicio.Enabled = true;
-            btnAnterior.Enabled = true;
-            btnProximo.Enabled = true;
-            btnUltimo.Enabled = true;
-            btnEditar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnBuscar.Enabled = true;
-            txtCodigoLeitor.Enabled = true;
-
-            if (osLeitores.EstaNoInicio)
+            if (osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor > 0) // leitor possui empréstimos?
             {
-                btnInicio.Enabled = false;
-                btnAnterior.Enabled = false;
+                MessageBox.Show("Náo se pode editar Leitor com livros em sua posse!");
             }
-
-            if (osLeitores.EstaNoFim)
+            else  // não tem empréstimos, podemos continuar editando esse leitor
             {
-                btnProximo.Enabled = false;
-                btnUltimo.Enabled = false;
-            }
-
-            if (osLeitores.EstaVazio)
-            {
-                btnEditar.Enabled = false;
-                btnExcluir.Enabled = false;
-                btnBuscar.Enabled = false;
-                txtCodigoLeitor.Enabled = false;
+                osLeitores.SituacaoAtual = Situacao.editando;  // programa entra no modo de edição
+                txtCodigoLeitor.ReadOnly = true;               // não deixa usuário alterar o código (prime key)
+                btnSalvar.Enabled       = true;
+                stlbMensagem.Text       = "Mensagem: Digite os dados atualizados pressione [Salvar] para registrá-los.";
+                txtNomeLeitor.Focus();
             }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para limpar os campos da tela para deixá-los prontos para digitação  
-        private void LimparTela()
-        {
-            // Limpamos os campos da tela para deixá-los prontos para digitação            
-            txtCodigoLeitor.Clear();
-            txtNomeLeitor.Clear();
-            txtEndereco.Clear();
-            txtLivros.Clear();
-            stlbMensagem.Text = "Mensagem: ";
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a gravação dos leitores atualizados no arquivo leitores.txt, após o formulário ser fechado
-        private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt"); // Grava os dados atualizados no arquivo texto
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para fechar o formulário de livros
-        private void btnSair_Click(object sender, EventArgs e)
-        {
-            Close(); // Fecha o programa
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para exclusão de um leitor no arquivo leitores.txt
+        // Método para exclusão de um leitor no arquivo leitores.txt - DELETE
         private void btnExcluir_Click(object sender, EventArgs e)
         {
             if (osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor > 0) // leitor tem empréstimos?
@@ -323,19 +312,45 @@ namespace apBiblioteca
 
 
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a busca de leitores no arquivo leitores.txt
-        private void btnBuscar_Click(object sender, EventArgs e)
+        // Método para salvar um novo leitor no arquivo leitores.txt
+        private void btnSalvar_Click(object sender, EventArgs e)
         {
-            LimparTela(); // limpamos os campos da tela para deixá-los prontos para digitação
-            osLeitores.SituacaoAtual = Situacao.pesquisando; // o programa entrou no modo de pesquisa
-            // libera os campos para o usuario digitar o codigo do leitor procurado
-            txtCodigoLeitor.ReadOnly = false;
-            txtCodigoLeitor.Enabled = true;
-            txtCodigoLeitor.Focus();
-            stlbMensagem.Text = "Mensagem: Digite a matrícula do leitor que busca";
+            try
+            {
+                switch (osLeitores.SituacaoAtual)
+                {
+                    case Situacao.incluindo:
+                        {
+                            // Instancia um objeto da classe Leitor, com a quantidade livros 0 e os códigos de livros vazios.
+                            // para que depois possamos fazer empréstimos com esse leitor.
+                            var novoLeitor              = new Leitor(txtCodigoLeitor.Text, txtNomeLeitor.Text, txtEndereco.Text, 0, new string[5]);
+
+                            osLeitores.Incluir(novoLeitor, posicaoDeInclusao);  // inclui um novo registro de leitor no arquivo texto 
+                            osLeitores.SituacaoAtual    = Situacao.navegando;   // programa entra no modo de navegação
+                            osLeitores.PosicaoAtual     = posicaoDeInclusao;    // reposiciona no novo registro de leitor
+                            btnCancelar.PerformClick();                         // atualiza a tela para mostrar o novo leitor
+                        }
+                        break;
+
+                    case Situacao.editando:
+                        {
+                            // os atributos do leitor são atualizados 
+                            osLeitores[osLeitores.PosicaoAtual].NomeLeitor      = txtNomeLeitor.Text;
+                            osLeitores[osLeitores.PosicaoAtual].EnderecoLeitor  = txtEndereco.Text;
+                            btnCancelar.PerformClick(); // atualiza a tela para mostrar o leitor com os novos dados
+                        }
+                        break;
+                }
+                txtCodigoLeitor.ReadOnly    = true;     // usuário nao poderá mais digitasr nesese campo a menos que pressione [Novo]
+                txtCodigoLeitor.Enabled     = false;    // usuário nao poderá mais entrar nesse campo atépressionar [Novo] ou [Buscar]
+                btnSalvar.Enabled           = false;    // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro de arquivo: " + erro.Message);
+            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -349,24 +364,18 @@ namespace apBiblioteca
 
 
 
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para edição de leitores no arquivo leitores.txt
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (osLeitores[osLeitores.PosicaoAtual].QuantosLivrosComLeitor > 0) // leitor possui empréstimos?
-            {
-                MessageBox.Show("Náo se pode editar Leitor com livros em sua posse!");
-            }
-            else  // não tem empréstimos, podemos continuar editando esse leitor
-            {
-                osLeitores.SituacaoAtual = Situacao.editando;  // programa entra no modo de edição
-                txtCodigoLeitor.ReadOnly = true;               // não deixa usuário alterar o código (prime key)
-                txtNomeLeitor.Focus();
-                btnSalvar.Enabled = true;
-                stlbMensagem.Text = "Mensagem: Digite os dados atualizados pressione [Salvar] para registrá-los.";
-            }
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+                    /********************************************************************/
+                    /******************** BOTOÕES DE NAVEGAÇÃO **************************/
+                    /********************************************************************/
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -395,7 +404,6 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para exibição do próximo leitor em relação ao atual do arquivo leitores.txt
         private void btnProximo_Click(object sender, EventArgs e)
@@ -421,5 +429,41 @@ namespace apBiblioteca
             btnSalvar.Enabled = false;
         }
         /*-----------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /********************************************************************/
+        /************************ FIM DO FORMULÁRIO *************************/
+        /********************************************************************/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a gravação dos leitores atualizados no arquivo leitores.txt, após o formulário ser fechado
+        private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt"); // Grava os dados atualizados no arquivo texto
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para fechar o formulário de livros
+        private void btnSair_Click(object sender, EventArgs e)
+        {
+            Close(); // Fecha o programa
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
     }
 }

@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace apBiblioteca
 {
+    // Autor: Fabricio Onofre Rezende de Camargo
+
     public partial class FrmTipoLivro : Form
     {
         public FrmTipoLivro()
         {
             InitializeComponent();
         }
+
 
         /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
 
@@ -21,7 +25,177 @@ namespace apBiblioteca
 
 
 
+
+
+
+
         /**************************************    MÉTODOS DA CLASSE        *****************************************/
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a leitura dos arquivos txt, após o formulário ser aberto
+        private void FrmTipoLivro_Load(object sender, EventArgs e)
+        {
+            // Exibição das imagens nos botões do menu de navegação
+            tsBotoes.ImageList = imlBotoes;
+            int indice = 0;
+            foreach (ToolStripItem item in tsBotoes.Items)
+            {
+                if (item is ToolStripButton) // se não é separador:
+                {
+                    (item as ToolStripButton).ImageIndex = indice++; // Adiciona a imagem no botão
+                }
+            }
+
+            // Leitura dos arquivos textos
+            osLivros = new VetorDados<Livro>(50);
+            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+
+            osTipos = new VetorDados<TipoLivro>(50);
+            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+
+            btnInicio.PerformClick();  // Posiciona o formulário para exibir o primeiro tipo de livro cadastrado
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para a atualização das informações do formularioe e exibindo a versão mais recente do arquivo tipoLivro.txt
+        private void AtualizarTela()
+        {
+
+            if (!osTipos.EstaVazio)
+            {
+                int indice = osTipos.PosicaoAtual;
+                txtCodigoTipoLivro.Text = $"{osTipos[indice].CodigoTipoLivro}"; // atributo chave 
+                txtDescricaoLivro.Text = $"{osTipos[indice].DescricaoDoLivro}"; // atributo descrição do livro
+
+                stlbMensagem.Text = $"Mensagem: Registro {(osTipos.PosicaoAtual + 1)} / {osTipos.Tamanho}";
+                osTipos.ExibirDados(lbTipoLivro);
+            }
+            else
+            {
+                LimparTela();
+                lbTipoLivro.Items.Clear();
+            }
+            TestarBotoes(); // Habilita os botões de acordo com a necessidade do usuario
+
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para habilitar somente os botões correspondentes ao modo atual do programa  
+        private void TestarBotoes()
+        {
+            // Habilita os botões do menu de acordo com a necessidade do usuario
+            btnInicio.Enabled = true;
+            btnAnterior.Enabled = true;
+            btnProximo.Enabled = true;
+            btnUltimo.Enabled = true;
+            btnEditar.Enabled = true;
+            btnExcluir.Enabled = true;
+            btnBuscar.Enabled = true;
+            txtCodigoTipoLivro.Enabled = true;
+
+            if (osTipos.EstaNoInicio)
+            {
+                btnInicio.Enabled = false;
+                btnAnterior.Enabled = false;
+            }
+
+            if (osTipos.EstaNoFim)
+            {
+                btnProximo.Enabled = false;
+                btnUltimo.Enabled = false;
+            }
+
+            if (osTipos.EstaVazio)
+            {
+                btnEditar.Enabled = false;
+                btnExcluir.Enabled = false;
+                btnBuscar.Enabled = false;
+                txtCodigoTipoLivro.Enabled = false;
+            }
+            else
+            {
+                switch (osTipos.SituacaoAtual)
+                {
+                    // Confere o que o usuario deseja fazer
+                    case Situacao.incluindo:
+                        {
+                            btnEditar.Enabled = false;
+                            btnExcluir.Enabled = false;
+                            btnBuscar.Enabled = false;
+                            btnProximo.Enabled = false;
+                            btnUltimo.Enabled = false;
+                            btnInicio.Enabled = false;
+                            btnAnterior.Enabled = false;
+                            break;
+                        }
+
+                    case Situacao.pesquisando:
+                        {
+                            btnEditar.Enabled = false;
+                            btnExcluir.Enabled = false;
+                            btnNovo.Enabled = false;
+                            btnProximo.Enabled = false;
+                            btnUltimo.Enabled = false;
+                            btnInicio.Enabled = false;
+                            btnAnterior.Enabled = false;
+                            break;
+                        }
+
+                    case Situacao.editando:
+                        {
+                            btnNovo.Enabled = false;
+                            btnExcluir.Enabled = false;
+                            btnBuscar.Enabled = false;
+                            btnProximo.Enabled = false;
+                            btnUltimo.Enabled = false;
+                            btnInicio.Enabled = false;
+                            btnAnterior.Enabled = false;
+                            break;
+                        }
+
+                    case Situacao.excluindo:
+                        {
+                            btnEditar.Enabled = false;
+                            btnBuscar.Enabled = false;
+                            btnNovo.Enabled = false;
+                            btnProximo.Enabled = false;
+                            btnUltimo.Enabled = false;
+                            btnInicio.Enabled = false;
+                            btnAnterior.Enabled = false;
+                            break;
+                        }
+
+                    case Situacao.navegando:
+                        {
+                            btnEditar.Enabled = true;
+                            btnBuscar.Enabled = true;
+                            btnNovo.Enabled = true;
+                            btnBuscar.Enabled = true;
+                            break;
+                        }
+                }
+            }
+
+        }
+    
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para limpar os campos da tela para deixá-los prontos para digitação  
+        private void LimparTela()
+        {
+            // Limpamos os campos da tela para deixá-los prontos para digitação ou exibição         
+            txtCodigoTipoLivro.Clear();
+            txtDescricaoLivro.Clear();
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
 
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para a leitura dos arquivos txt, após o formulário ser aberto
@@ -29,15 +203,19 @@ namespace apBiblioteca
         {
             try
             {
+
+                txtCodigoTipoLivro.Text = txtCodigoTipoLivro.Text.Replace(" ", String.Empty);
+
                 // se conseguiu converter a matricula digitada
                 // ou se ela não está em branco
                 if (!String.IsNullOrEmpty(txtCodigoTipoLivro.Text) && !String.IsNullOrWhiteSpace(txtCodigoTipoLivro.Text))
                 {
-                    byte codigo = byte.Parse(txtCodigoTipoLivro.Text);
-                    if (codigo > 0 && codigo < 255) // se o código digitado é valido
+                    byte codigo = 0;
+                    try
                     {
                         codigo = byte.Parse(txtCodigoTipoLivro.Text);
-                        var procurado = new TipoLivro(codigo); 
+
+                        var procurado = new TipoLivro(codigo);
 
                         switch (osTipos.SituacaoAtual)
                         {
@@ -76,11 +254,12 @@ namespace apBiblioteca
                                 }
                         }
                     }
-                    else // o código não é valido
+                    catch (Exception erro)
                     {
+
                         txtCodigoTipoLivro.Text = null;
                         btnCancelar.PerformClick(); // programa volta pro modo de navegãção
-                        MessageBox.Show(" Operação cancelada, digite um código que esteja entre 0 e 255!");
+                        MessageBox.Show("Operação cancelada, digite um código que esteja entre 0 e 255!");
                     }
 
                 }
@@ -140,29 +319,7 @@ namespace apBiblioteca
 
 
 
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a atualização das informações do formularioe e exibindo a versão mais recente do arquivo tipoLivro.txt
-        private void AtualizarTela()
-        {            
-
-            if (!osTipos.EstaVazio)
-            {
-                int indice = osTipos.PosicaoAtual;
-                txtCodigoTipoLivro.Text = $"{osTipos[indice].CodigoTipoLivro}"; // atributo chave 
-                txtDescricaoLivro.Text = $"{osTipos[indice].DescricaoDoLivro}"; // atributo descrição do livro
-
-                stlbMensagem.Text = $"Mensagem: Registro {(osTipos.PosicaoAtual + 1)} / {osTipos.Tamanho}";
-                osTipos.ExibirDados(lbTipoLivro);
-            }            
-            else
-            {
-                LimparTela();
-                lbTipoLivro.Items.Clear();
-            }
-            TestarBotoes(); // Habilita os botões de acordo com a necessidade do usuario
-
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
+        
 
 
 
@@ -244,63 +401,15 @@ namespace apBiblioteca
         private void btnBuscar_Click_1(object sender, EventArgs e)
         {
             LimparTela(); // limpamos os campos da tela para deixá-los prontos para digitação e exibição dos dados
-            txtCodigoTipoLivro.ReadOnly = false;
             osTipos.SituacaoAtual = Situacao.pesquisando;
+            TestarBotoes();
+            txtCodigoTipoLivro.ReadOnly = false;
             txtCodigoTipoLivro.Focus(); // foco é colocado no atributo chave de pesquisa
             stlbMensagem.Text = "Mensagem: Digite o código do livro desejado e pressione [Tab] para buscá-lo.";
             btnSalvar.Enabled = false;
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para limpar os campos da tela para deixá-los prontos para digitação  
-        private void LimparTela()
-        {
-            // Limpamos os campos da tela para deixá-los prontos para digitação ou exibição         
-            txtCodigoTipoLivro.Clear();
-            txtDescricaoLivro.Clear();
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para habilitar somente os botões correspondentes ao modo atual do programa  
-        private void TestarBotoes()
-        {
-            // Habilita os botões do menu de acordo com a necessidade do usuario
-            btnInicio.Enabled = true;
-            btnAnterior.Enabled = true;
-            btnProximo.Enabled = true;
-            btnUltimo.Enabled = true;
-            btnEditar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnBuscar.Enabled = true;
-            txtCodigoTipoLivro.Enabled = true;
-
-            if (osTipos.EstaNoInicio)
-            {
-                btnInicio.Enabled = false;
-                btnAnterior.Enabled = false;
-            }
-
-            if (osTipos.EstaNoFim)
-            {
-                btnProximo.Enabled = false;
-                btnUltimo.Enabled = false;
-            }
-
-            if (osTipos.EstaVazio)
-            {
-                btnEditar.Enabled = false;
-                btnExcluir.Enabled = false;
-                btnBuscar.Enabled = false;
-                txtCodigoTipoLivro.Enabled = false;
-            }
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
 
 
 
@@ -394,41 +503,9 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a leitura dos arquivos txt, após o formulário ser aberto
-        private void FrmTipoLivro_Load(object sender, EventArgs e)
-        {
-            // Exibição das imagens nos botões do menu de navegação
-            tsBotoes.ImageList = imlBotoes;
-            int indice = 0;
-            foreach (ToolStripItem item in tsBotoes.Items)
-            {
-                if (item is ToolStripButton) // se não é separador:
-                {
-                    (item as ToolStripButton).ImageIndex = indice++; // Adiciona a imagem no botão
-                }
-            }
-
-            // Leitura dos arquivos textos
-            osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
-
-            osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
-
-            btnInicio.PerformClick();  // Posiciona o formulário para exibir o primeiro tipo de livro cadastrado
-
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
 
         /*-----------------------------------------------------------------------------------------------------*/
         // Método que faz o código que está sendo digiitado ficar sem espaços em branco
-        private void txtCodigoTipoLivro_TextChanged(object sender, EventArgs e)
-        {
-            txtCodigoTipoLivro.Text = txtCodigoTipoLivro.Text.Trim();
-        }
-
         private void txtDescricaoLivro_Leave(object sender, EventArgs e)
         {
             try

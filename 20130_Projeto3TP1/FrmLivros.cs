@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace apBiblioteca
 {
+    // Autor: Fabricio Onofre Rezende de Camargo
+
     public partial class FrmLivros : Form
     {
 
@@ -11,19 +13,24 @@ namespace apBiblioteca
             InitializeComponent();
         }
 
+
+
+
         /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
 
-        VetorDados<Livro> osLivros;
-        VetorDados<Leitor> osLeitores;
-        VetorDados<TipoLivro> osTipos;
+        VetorDados<Livro>       osLivros;
+        VetorDados<Leitor>      osLeitores;
+        VetorDados<TipoLivro>   osTipos;
 
         int posicaoDeInclusao = -1;
 
         /*************************************************************************************************************/
 
 
-        /**************************************    MÉTODOS DA CLASSE        *****************************************/
 
+
+
+        /**************************************    MÉTODOS DA CLASSE        *****************************************/
 
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para a leitura dos arquivos txt, após o formulário ser aberto
@@ -52,7 +59,6 @@ namespace apBiblioteca
             btnInicio.PerformClick();  // Posiciona o formulário para exibir o primeiro livro cadastrado
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -130,7 +136,6 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para limpar os campos da tela para deixá-los prontos para digitação  
         private void LimparTela()
@@ -142,7 +147,6 @@ namespace apBiblioteca
             dtpDevolucao.Value = dtpDevolucao.MaxDate;
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -183,21 +187,79 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para deixar o programa no modo de inclusão
-        private void btnNovo_Click(object sender, EventArgs e)
+        // Método para fazer a escolha do tipo de livro que será incluido no arquivo livros.txt
+        private void dgvTipoLivro_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            txtCodigoLivro.Enabled  = true;
-            txtCodigoLivro.ReadOnly = false;
-            dgvTipoLivro.ReadOnly   = false;
-            osLivros.SituacaoAtual  = Situacao.incluindo; // programa entrou no modo de inclusão
-            LimparTela();  // limpamos os campos da tela para deixá-los prontos para digitação
-            stlbMensagem.Text = "Mensagem: Digite o novo código de livro e pressione a tecla [Tab] para continuar";  // mensagem orientando o usuário
-            txtCodigoLivro.Focus(); // cursor é posicionado para iniciar a digitação do código
+            // Exibição da linha do dgvTipoLivro
+            if (osLivros.SituacaoAtual != Situacao.incluindo && !osLivros.EstaVazio)
+            {
+                // Não deixa outro tipo de livro ficar selecionada, há não ser o do livro atual
+                if (osLivros.SituacaoAtual != Situacao.editando)
+                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = false;
+                else
+                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = true;
+
+
+
+                for (int linha = 0; linha < osTipos.Tamanho; linha++)
+                {
+                    int pkTipoLivro = Convert.ToInt32(dgvTipoLivro.Rows[linha].Cells[0].Value.ToString()); // Prime Key
+                    int fkTipoLivro = Convert.ToInt32(osLivros[osLivros.PosicaoAtual].TipoDoLivro);        // Foreing Key
+
+                    if (pkTipoLivro == fkTipoLivro)                 // Se esse tipo for a categoria do livro atual
+                    {
+                        dgvTipoLivro.Rows[linha].Selected = true;   // Habilita essa linha como selecionada e para a busca
+                        break;
+                    }
+                }
+            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método que faz o código que está sendo digiitado ficar sem espaços em branco
+        private void txtCodigoLivro_TextChanged(object sender, EventArgs e)
+        {
+            txtCodigoLivro.Text = txtCodigoLivro.Text.Trim();
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método que faz o código que está sendo digiitado ficar sem espaços em branco
+        private void txtTituloLivro_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                // se conseguiu converter a matricula digitada
+                // ou se ela não está em branco
+                if (osLivros.SituacaoAtual == Situacao.incluindo)
+                {
+                    if (!String.IsNullOrEmpty(txtTituloLivro.Text) && !String.IsNullOrWhiteSpace(txtTituloLivro.Text))
+                    {
+
+                        var procurado = new Livro(txtCodigoLivro.Text);
+
+                        if (osLivros.Existe(procurado, out posicaoDeInclusao)) // categoria já cadastrada?
+                        {
+                            MessageBox.Show("Código já existe. Não pode ser incluído novamente!");
+                            btnCancelar.PerformClick();  // cancela a operação de inclusão
+                        }
+                        else  // o parâmetro posicaoDeInclusao recebeu o índice de onde a nova matrícula deveria estar no vetor dados
+                        {
+                            btnSalvar.Enabled = true;
+                        }
+                    }
+                }
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro de arquivo: " + erro.Message);
+            }
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -261,85 +323,36 @@ namespace apBiblioteca
 
 
 
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para salvar um novo livro no arquivo livro.txt
-        private void btnSalvar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                byte codigoTipoLivro = byte.Parse(dgvTipoLivro.CurrentRow.Cells[0].Value.ToString());
-                switch (osLivros.SituacaoAtual)
-                {
-                    case Situacao.incluindo:
-                        {
-                            // Instancia um objeto da classe Livro, com a data de devolução maxima e o código leitor vazio
-                            // para podermos depois fazer um empréstimo desse livro.
-                            var novo = new Livro(txtCodigoLivro.Text, txtTituloLivro.Text,
-                             codigoTipoLivro, new DateTime(1899, 1, 1), "000000");
 
-                            osLivros.Incluir(novo, posicaoDeInclusao);      // inclui um novo registro de livro no arquivo texto 
-                            osLivros.SituacaoAtual  = Situacao.navegando;   // programa entra no modo de navegação
-                            osLivros.PosicaoAtual   = posicaoDeInclusao;    // reposiciona no novo registro de livro
-                            btnCancelar.PerformClick();                     // atualiza a tela para mostrar o novo livro
-                        }
-                        break;
-                    case Situacao.editando:
-                        {
-                            // o atributo tipo do livro e titulo do livro são atualizados 
-                            osLivros[osLivros.PosicaoAtual].TituloLivro = txtTituloLivro.Text;
-                            osLivros[osLivros.PosicaoAtual].TipoDoLivro = codigoTipoLivro;
-                            btnCancelar.PerformClick(); // exibi o livro recentemente editado
-                        }
-                        break;
-                }
-                txtCodigoLivro.ReadOnly = true;  // usuário nao poderá mais digitar nesese campo a menos que pressione [Novo] ou [Buscar]
-                btnSalvar.Enabled       = false; // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show("Erro de arquivo: " + erro.Message);
-            }
+
+
+
+
+
+
+
+
+        /********************************************************************/
+        /******************************* CRUD *******************************/
+        /********************************************************************/
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para deixar o programa no modo de inclusão - CREATE
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            txtCodigoLivro.Enabled = true;
+            txtCodigoLivro.ReadOnly = false;
+            dgvTipoLivro.ReadOnly = false;
+            osLivros.SituacaoAtual = Situacao.incluindo; // programa entrou no modo de inclusão
+            LimparTela();  // limpamos os campos da tela para deixá-los prontos para digitação
+            stlbMensagem.Text = "Mensagem: Digite o novo código de livro e pressione a tecla [Tab] para continuar";  // mensagem orientando o usuário
+            txtCodigoLivro.Focus(); // cursor é posicionado para iniciar a digitação do código
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a gravação dos livros atualizados no arquivo livro.txt, após o formulário ser fechado
-        private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");// Grava os dados atualizados no arquivo texto
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para exclusão de um livro no arquivo livros.txt
-        private void btnExcluir_Click(object sender, EventArgs e)
-        {
-            if (osLivros[osLivros.PosicaoAtual].CodigoLeitorComLivro != "000000") // o livro está emprestado?
-            {
-                MessageBox.Show("Não é possível concluir a exclusão, pois o livro está emprestado.");
-            }
-            else  // nao está emprestado, podemos continuar excluindo esse leitor
-            {
-                
-                if (MessageBox.Show("Deseja realmente excluir?", "Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    osLivros.Excluir(osLivros.PosicaoAtual); // Exclui o livro selecionado
-                    btnProximo.PerformClick();
-                    AtualizarTela();    // Atualiza a tela com os dados do próximo livro do arquivo
-
-                }
-            }
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para a busca de livros no arquivo livros.txt
+        // Método para a busca de livros no arquivo livros.txt - READ
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             LimparTela();                                   // limpamos os campos da tela para deixá-los prontos para digitação
@@ -351,21 +364,8 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para cancelar o modo atual do programa
-        private void btnCancelar_Click(object sender, EventArgs e)
-        {
-            osTipos.SituacaoAtual   = Situacao.navegando;   // desfaz o modo anterior do programa e volta ao modo de navegação
-            AtualizarTela();                                // restaura na tela o registro que era exibido antes da operação que foi cancelada
-            txtCodigoLivro.ReadOnly = true;
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método para edição de livros no arquivo livros.txt
+        // Método para edição de livros no arquivo livros.txt - UPDATE
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (osLivros[osLivros.PosicaoAtual].CodigoLeitorComLivro != "000000") // o livro está emprestado?
@@ -385,6 +385,96 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para exclusão de um livro no arquivo livros.txt - DELETE
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            if (osLivros[osLivros.PosicaoAtual].CodigoLeitorComLivro != "000000") // o livro está emprestado?
+            {
+                MessageBox.Show("Não é possível concluir a exclusão, pois o livro está emprestado.");
+            }
+            else  // nao está emprestado, podemos continuar excluindo esse leitor
+            {
+
+                if (MessageBox.Show("Deseja realmente excluir?", "Exclusão", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    osLivros.Excluir(osLivros.PosicaoAtual); // Exclui o livro selecionado
+                    btnProximo.PerformClick();
+                    AtualizarTela();    // Atualiza a tela com os dados do próximo livro do arquivo
+
+                }
+            }
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para salvar um novo livro no arquivo livro.txt - CREATE
+        private void btnSalvar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                byte codigoTipoLivro = byte.Parse(dgvTipoLivro.CurrentRow.Cells[0].Value.ToString());
+                switch (osLivros.SituacaoAtual)
+                {
+                    case Situacao.incluindo:
+                        {
+                            // Instancia um objeto da classe Livro, com a data de devolução maxima e o código leitor vazio
+                            // para podermos depois fazer um empréstimo desse livro.
+                            var novo = new Livro(txtCodigoLivro.Text, txtTituloLivro.Text,
+                             codigoTipoLivro, new DateTime(1899, 1, 1), "000000");
+
+                            osLivros.Incluir(novo, posicaoDeInclusao);      // inclui um novo registro de livro no arquivo texto 
+                            osLivros.SituacaoAtual = Situacao.navegando;   // programa entra no modo de navegação
+                            osLivros.PosicaoAtual = posicaoDeInclusao;    // reposiciona no novo registro de livro
+                            btnCancelar.PerformClick();                     // atualiza a tela para mostrar o novo livro
+                        }
+                        break;
+                    case Situacao.editando:
+                        {
+                            // o atributo tipo do livro e titulo do livro são atualizados 
+                            osLivros[osLivros.PosicaoAtual].TituloLivro = txtTituloLivro.Text;
+                            osLivros[osLivros.PosicaoAtual].TipoDoLivro = codigoTipoLivro;
+                            btnCancelar.PerformClick(); // exibi o livro recentemente editado
+                        }
+                        break;
+                }
+                txtCodigoLivro.ReadOnly = true;  // usuário nao poderá mais digitar nesese campo a menos que pressione [Novo] ou [Buscar]
+                btnSalvar.Enabled = false; // desabilita novamente o btnSalvar até que se pressione [Novo] ou [Editar]
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show("Erro de arquivo: " + erro.Message);
+            }
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+        /*-----------------------------------------------------------------------------------------------------*/
+        // Método para cancelar o modo atual do programa
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            osTipos.SituacaoAtual = Situacao.navegando;   // desfaz o modo anterior do programa e volta ao modo de navegação
+            AtualizarTela();                                // restaura na tela o registro que era exibido antes da operação que foi cancelada
+            txtCodigoLivro.ReadOnly = true;
+        }
+        /*-----------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /********************************************************************/
+        /******************** BOTOÕES DE NAVEGAÇÃO **************************/
+        /********************************************************************/
 
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para exibição do 1° livro do arquivo livros.txt
@@ -395,7 +485,6 @@ namespace apBiblioteca
             AtualizarTela();
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -409,7 +498,6 @@ namespace apBiblioteca
         /*-----------------------------------------------------------------------------------------------------*/
 
 
-
         /*-----------------------------------------------------------------------------------------------------*/
         // Método para exibição do próximo livro ao atual do arquivo livros.txt
         private void btnProximo_Click(object sender, EventArgs e)
@@ -419,7 +507,6 @@ namespace apBiblioteca
             AtualizarTela();
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -434,46 +521,27 @@ namespace apBiblioteca
 
 
 
+
+
+
+
+
+
+
+
+
+
+        /********************************************************************/
+        /************************ FIM DO FORMULÁRIO *************************/
+        /********************************************************************/
+
         /*-----------------------------------------------------------------------------------------------------*/
-        // Método para fazer a escolha do tipo de livro que será incluido no arquivo livros.txt
-        private void dgvTipoLivro_CellClick(object sender, DataGridViewCellEventArgs e)
+        // Método para a gravação dos livros atualizados no arquivo livro.txt, após o formulário ser fechado
+        private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Exibição da linha do dgvTipoLivro
-            if (osLivros.SituacaoAtual != Situacao.incluindo && !osLivros.EstaVazio)
-            {
-                // Não deixa outro tipo de livro ficar selecionada, há não ser o do livro atual
-                if(osLivros.SituacaoAtual != Situacao.editando)
-                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = false;
-                else
-                    dgvTipoLivro.Rows[Convert.ToInt32(dgvTipoLivro.CurrentRow.Index)].Selected = true;
-
-
-
-                for (int linha = 0; linha < osTipos.Tamanho; linha++)
-                {
-                    int pkTipoLivro = Convert.ToInt32(dgvTipoLivro.Rows[linha].Cells[0].Value.ToString()); // Prime Key
-                    int fkTipoLivro = Convert.ToInt32(osLivros[osLivros.PosicaoAtual].TipoDoLivro);        // Foreing Key
-
-                    if (pkTipoLivro == fkTipoLivro)                 // Se esse tipo for a categoria do livro atual
-                    {
-                        dgvTipoLivro.Rows[linha].Selected = true;   // Habilita essa linha como selecionada e para a busca
-                        break;
-                    }
-                }
-            }
+            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");// Grava os dados atualizados no arquivo texto
         }
         /*-----------------------------------------------------------------------------------------------------*/
-
-
-
-        /*-----------------------------------------------------------------------------------------------------*/
-        // Método que faz o código que está sendo digiitado ficar sem espaços em branco
-        private void txtCodigoLivro_TextChanged(object sender, EventArgs e)
-        {
-            txtCodigoLivro.Text = txtCodigoLivro.Text.Trim();
-        }
-        /*-----------------------------------------------------------------------------------------------------*/
-
 
 
         /*-----------------------------------------------------------------------------------------------------*/
@@ -481,37 +549,6 @@ namespace apBiblioteca
         private void btnSair_Click(object sender, EventArgs e)
         {
             Close();
-        }
-
-        private void txtTituloLivro_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                // se conseguiu converter a matricula digitada
-                // ou se ela não está em branco
-                if (osLivros.SituacaoAtual == Situacao.incluindo)
-                {
-                    if (!String.IsNullOrEmpty(txtTituloLivro.Text) && !String.IsNullOrWhiteSpace(txtTituloLivro.Text))
-                    {
-                       
-                        var procurado = new Livro(txtCodigoLivro.Text);
-
-                        if (osLivros.Existe(procurado, out posicaoDeInclusao)) // categoria já cadastrada?
-                        {
-                            MessageBox.Show("Código já existe. Não pode ser incluído novamente!");
-                            btnCancelar.PerformClick();  // cancela a operação de inclusão
-                        }
-                        else  // o parâmetro posicaoDeInclusao recebeu o índice de onde a nova matrícula deveria estar no vetor dados
-                        {
-                            btnSalvar.Enabled = true;
-                        }
-                    }
-                }
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show("Erro de arquivo: " + erro.Message);
-            }
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
