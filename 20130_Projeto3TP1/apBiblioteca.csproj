@@ -152,9 +152,6 @@
   <ItemGroup>
     <None Include="Resources\alexandria-1.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="frmFunc\" />
-    <Folder Include="frmLeitor\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

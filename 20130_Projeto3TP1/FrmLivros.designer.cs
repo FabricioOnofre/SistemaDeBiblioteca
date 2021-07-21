@@ -417,7 +417,6 @@
             this.txtCodigoLivro.Size = new System.Drawing.Size(79, 26);
             this.txtCodigoLivro.TabIndex = 3;
             this.txtCodigoLivro.TabStop = false;
-            this.txtCodigoLivro.TextChanged += new System.EventHandler(this.txtCodigoLivro_TextChanged);
             this.txtCodigoLivro.Leave += new System.EventHandler(this.txtCodigoLivro_Leave);
             // 
             // label2
