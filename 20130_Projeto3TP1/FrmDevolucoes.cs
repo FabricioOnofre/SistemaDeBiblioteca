@@ -34,13 +34,13 @@ namespace apBiblioteca
         private void FrmDevolucoes_Load(object sender, EventArgs e)
         {
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLeitores.LerDados("..\\leitores.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
             AtualizarTela(); // Atualiza a tela preenchendo o datagridview com os dados de livros e leitores
         }
@@ -51,8 +51,8 @@ namespace apBiblioteca
         // Método para a gravação dos dados de leitores e livros atualizados, após o formulário ser fechado
         private void FrmDevolucoes_FormClosing(object sender, FormClosingEventArgs e)
         {
-            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt");
-            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");
+            osLeitores.GravacaoEmDisco("..\\leitores.txt");
+            osLivros.GravacaoEmDisco("..\\livros.txt");
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
@@ -289,8 +289,17 @@ namespace apBiblioteca
 
                 // Instancia um objeto da classe Leitor, com os dados de QuantosLivrosComLeitor
                 // e CodigoLivroComLeitor[] atualizados, após a devolução ter sido concluido
-                var novoLeitor = new Leitor(Convert.ToString(osLeitores[linhaLeitor].CodigoLeitor), Convert.ToString(osLeitores[linhaLeitor].NomeLeitor),
-                Convert.ToString(osLeitores[linhaLeitor].EnderecoLeitor), osLeitores[linhaLeitor].QuantosLivrosComLeitor, osLeitores[linhaLeitor].CodigoLivroComLeitor);
+                string codigoLeitor = Convert.ToString(osLeitores[linhaLeitor].CodigoLeitor);
+                string cpfLeitor = Convert.ToString(osLeitores[linhaLeitor].CpfLeitor);
+                DateTime dataNascimento = Convert.ToDateTime(osLeitores[linhaLeitor].DataNascimento);
+                string telefoneLeitor = Convert.ToString(osLeitores[linhaLeitor].TelefoneLeitor);
+                string nomeLeitor = Convert.ToString(osLeitores[linhaLeitor].NomeLeitor);
+                string enderecoLeitor = Convert.ToString(osLeitores[linhaLeitor].EnderecoLeitor);
+                byte qtdLivrosLeitor = osLeitores[linhaLeitor].QuantosLivrosComLeitor;
+                string[] codigoLivroLeitor = osLeitores[linhaLeitor].CodigoLivroComLeitor;
+
+                var novoLeitor = new Leitor(codigoLeitor, cpfLeitor, dataNascimento, telefoneLeitor, 
+                    nomeLeitor, enderecoLeitor, qtdLivrosLeitor, codigoLivroLeitor);
 
 
                 osLeitores.Excluir(linhaLeitor);     // Exclui o registro antigo desse leitor gravado no arquivo texto 

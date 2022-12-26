@@ -1,0 +1,14 @@
+001Drama
+002Poesia
+003Crônica
+004HQ
+005Romance
+006Novela
+007Conto
+008Carta
+009Biografia
+010Aventura
+011Literatura
+012Terror
+013Artigo
+014Fantasia

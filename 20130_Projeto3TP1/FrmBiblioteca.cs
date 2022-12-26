@@ -15,7 +15,7 @@ namespace apBiblioteca
         /**************************************    ATRIBUTOS DA CLASSE        *****************************************/
 
         // Formulários do programa
-        FrmLivros frmLivros;              // Formulario CRUD de Livros
+        FrmLivros frmLivros;                            // Formulario CRUD de Livros
         FrmLeitores             frmLeitores;            // Formulario CRUD de Leitores
         FrmTipoLivro            frmTipoLivro;           // Formulario CRUD de Categorias de Livros
         FrmEmprestimo           frmEmprestimo;          // Formulario de Empréstimos de Livros

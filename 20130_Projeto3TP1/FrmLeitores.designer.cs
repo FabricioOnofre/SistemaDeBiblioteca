@@ -59,8 +59,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tpLista = new System.Windows.Forms.TabPage();
-            this.imlBotoes = new System.Windows.Forms.ImageList(this.components);
             this.lbLeitores = new System.Windows.Forms.ListBox();
+            this.imlBotoes = new System.Windows.Forms.ImageList(this.components);
+            this.txtCpfLeitor = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtpNascimento = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtTelefoneLeitor = new System.Windows.Forms.TextBox();
             this.tsBotoes.SuspendLayout();
             this.ssMensagem.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -90,7 +96,7 @@
             this.btnSair});
             this.tsBotoes.Location = new System.Drawing.Point(0, 0);
             this.tsBotoes.Name = "tsBotoes";
-            this.tsBotoes.Size = new System.Drawing.Size(1015, 42);
+            this.tsBotoes.Size = new System.Drawing.Size(764, 42);
             this.tsBotoes.TabIndex = 0;
             this.tsBotoes.Text = "toolStrip1";
             // 
@@ -123,7 +129,7 @@
             this.btnProximo.Image = ((System.Drawing.Image)(resources.GetObject("btnProximo.Image")));
             this.btnProximo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnProximo.Name = "btnProximo";
-            this.btnProximo.Size = new System.Drawing.Size(55, 39);
+            this.btnProximo.Size = new System.Drawing.Size(56, 39);
             this.btnProximo.Text = "Próximo";
             this.btnProximo.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnProximo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -223,7 +229,7 @@
             this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
             this.btnExcluir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(45, 39);
+            this.btnExcluir.Size = new System.Drawing.Size(46, 39);
             this.btnExcluir.Text = "&Excluir";
             this.btnExcluir.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
@@ -253,9 +259,9 @@
             this.ssMensagem.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.ssMensagem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stlbMensagem});
-            this.ssMensagem.Location = new System.Drawing.Point(0, 438);
+            this.ssMensagem.Location = new System.Drawing.Point(0, 483);
             this.ssMensagem.Name = "ssMensagem";
-            this.ssMensagem.Size = new System.Drawing.Size(1015, 22);
+            this.ssMensagem.Size = new System.Drawing.Size(764, 22);
             this.ssMensagem.TabIndex = 1;
             this.ssMensagem.Text = "statusStrip1";
             // 
@@ -275,12 +281,18 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 61);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1016, 374);
+            this.tabControl1.Size = new System.Drawing.Size(765, 419);
             this.tabControl1.TabIndex = 2;
             // 
             // tpCadastro
             // 
             this.tpCadastro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.tpCadastro.Controls.Add(this.label7);
+            this.tpCadastro.Controls.Add(this.txtTelefoneLeitor);
+            this.tpCadastro.Controls.Add(this.label6);
+            this.tpCadastro.Controls.Add(this.dtpNascimento);
+            this.tpCadastro.Controls.Add(this.txtCpfLeitor);
+            this.tpCadastro.Controls.Add(this.label5);
             this.tpCadastro.Controls.Add(this.txtLivros);
             this.tpCadastro.Controls.Add(this.label4);
             this.tpCadastro.Controls.Add(this.label3);
@@ -292,26 +304,28 @@
             this.tpCadastro.Location = new System.Drawing.Point(4, 27);
             this.tpCadastro.Name = "tpCadastro";
             this.tpCadastro.Padding = new System.Windows.Forms.Padding(3);
-            this.tpCadastro.Size = new System.Drawing.Size(678, 326);
+            this.tpCadastro.Size = new System.Drawing.Size(757, 388);
             this.tpCadastro.TabIndex = 0;
             this.tpCadastro.Text = "Cadastro";
             // 
             // txtLivros
             // 
+            this.txtLivros.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLivros.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtLivros.Enabled = false;
             this.txtLivros.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLivros.Location = new System.Drawing.Point(12, 163);
+            this.txtLivros.Location = new System.Drawing.Point(12, 214);
             this.txtLivros.MaxLength = 30;
             this.txtLivros.Multiline = true;
             this.txtLivros.Name = "txtLivros";
-            this.txtLivros.Size = new System.Drawing.Size(657, 157);
+            this.txtLivros.Size = new System.Drawing.Size(728, 157);
             this.txtLivros.TabIndex = 8;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 133);
+            this.label4.Location = new System.Drawing.Point(9, 193);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(166, 18);
             this.label4.TabIndex = 7;
@@ -320,7 +334,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 88);
+            this.label3.Location = new System.Drawing.Point(9, 85);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 18);
             this.label3.TabIndex = 6;
@@ -328,20 +342,24 @@
             // 
             // txtEndereco
             // 
+            this.txtEndereco.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEndereco.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.txtEndereco.Location = new System.Drawing.Point(109, 88);
+            this.txtEndereco.Location = new System.Drawing.Point(109, 82);
             this.txtEndereco.MaxLength = 50;
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(407, 26);
+            this.txtEndereco.Size = new System.Drawing.Size(631, 26);
             this.txtEndereco.TabIndex = 5;
             // 
             // txtNomeLeitor
             // 
+            this.txtNomeLeitor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNomeLeitor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.txtNomeLeitor.Location = new System.Drawing.Point(109, 45);
             this.txtNomeLeitor.MaxLength = 35;
             this.txtNomeLeitor.Name = "txtNomeLeitor";
-            this.txtNomeLeitor.Size = new System.Drawing.Size(306, 26);
+            this.txtNomeLeitor.Size = new System.Drawing.Size(631, 26);
             this.txtNomeLeitor.TabIndex = 4;
             // 
             // txtCodigoLeitor
@@ -351,14 +369,14 @@
             this.txtCodigoLeitor.MaxLength = 6;
             this.txtCodigoLeitor.Name = "txtCodigoLeitor";
             this.txtCodigoLeitor.ReadOnly = true;
-            this.txtCodigoLeitor.Size = new System.Drawing.Size(79, 26);
+            this.txtCodigoLeitor.Size = new System.Drawing.Size(218, 26);
             this.txtCodigoLeitor.TabIndex = 3;
             this.txtCodigoLeitor.Leave += new System.EventHandler(this.txtCodigoLeitor_Leave);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 48);
+            this.label2.Location = new System.Drawing.Point(9, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 18);
             this.label2.TabIndex = 1;
@@ -369,9 +387,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 18);
+            this.label1.Size = new System.Drawing.Size(64, 18);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Código";
+            this.label1.Text = "Código:";
             // 
             // tpLista
             // 
@@ -383,6 +401,16 @@
             this.tpLista.Size = new System.Drawing.Size(1008, 343);
             this.tpLista.TabIndex = 1;
             this.tpLista.Text = "Lista";
+            // 
+            // lbLeitores
+            // 
+            this.lbLeitores.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbLeitores.FormattingEnabled = true;
+            this.lbLeitores.ItemHeight = 14;
+            this.lbLeitores.Location = new System.Drawing.Point(19, 6);
+            this.lbLeitores.Name = "lbLeitores";
+            this.lbLeitores.Size = new System.Drawing.Size(980, 326);
+            this.lbLeitores.TabIndex = 0;
             // 
             // imlBotoes
             // 
@@ -406,22 +434,71 @@
             this.imlBotoes.Images.SetKeyName(15, "WINPREV.BMP");
             this.imlBotoes.Images.SetKeyName(16, "abort.bmp");
             // 
-            // lbLeitores
+            // txtCpfLeitor
             // 
-            this.lbLeitores.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLeitores.FormattingEnabled = true;
-            this.lbLeitores.ItemHeight = 14;
-            this.lbLeitores.Location = new System.Drawing.Point(19, 6);
-            this.lbLeitores.Name = "lbLeitores";
-            this.lbLeitores.Size = new System.Drawing.Size(980, 326);
-            this.lbLeitores.TabIndex = 0;
+            this.txtCpfLeitor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtCpfLeitor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.txtCpfLeitor.Location = new System.Drawing.Point(410, 8);
+            this.txtCpfLeitor.MaxLength = 11;
+            this.txtCpfLeitor.Name = "txtCpfLeitor";
+            this.txtCpfLeitor.Size = new System.Drawing.Size(330, 26);
+            this.txtCpfLeitor.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(359, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(45, 18);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "CPF:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 125);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(155, 18);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Data de Nascimento:";
+            // 
+            // dtpNascimento
+            // 
+            this.dtpNascimento.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dtpNascimento.Location = new System.Drawing.Point(179, 119);
+            this.dtpNascimento.MinDate = new System.DateTime(1920, 1, 25, 23, 59, 59, 0);
+            this.dtpNascimento.Name = "dtpNascimento";
+            this.dtpNascimento.Size = new System.Drawing.Size(561, 26);
+            this.dtpNascimento.TabIndex = 13;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 158);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(70, 18);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Telefone:";
+            // 
+            // txtTelefoneLeitor
+            // 
+            this.txtTelefoneLeitor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTelefoneLeitor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.txtTelefoneLeitor.Location = new System.Drawing.Point(109, 155);
+            this.txtTelefoneLeitor.MaxLength = 50;
+            this.txtTelefoneLeitor.Name = "txtTelefoneLeitor";
+            this.txtTelefoneLeitor.Size = new System.Drawing.Size(631, 26);
+            this.txtTelefoneLeitor.TabIndex = 15;
             // 
             // FrmLeitores
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1015, 460);
+            this.ClientSize = new System.Drawing.Size(764, 505);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.ssMensagem);
             this.Controls.Add(this.tsBotoes);
@@ -477,6 +554,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtEndereco;
         private System.Windows.Forms.ListBox lbLeitores;
+        private System.Windows.Forms.TextBox txtCpfLeitor;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtTelefoneLeitor;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dtpNascimento;
     }
 }
 

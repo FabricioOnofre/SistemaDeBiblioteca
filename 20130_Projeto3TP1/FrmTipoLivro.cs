@@ -55,10 +55,10 @@ namespace apBiblioteca
 
             // Leitura dos arquivos textos
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
             btnInicio.PerformClick();  // Posiciona o formulário para exibir o primeiro tipo de livro cadastrado
         }
@@ -124,8 +124,21 @@ namespace apBiblioteca
                 btnExcluir.Enabled = false;
                 btnBuscar.Enabled = false;
                 txtCodigoTipoLivro.Enabled = false;
+
+                if(osTipos.SituacaoAtual == Situacao.incluindo)
+                {
+                    btnEditar.Enabled = false;
+                    btnExcluir.Enabled = false;
+                    btnBuscar.Enabled = false;
+                    btnProximo.Enabled = false;
+                    btnUltimo.Enabled = false;
+                    btnInicio.Enabled = false;
+                    btnAnterior.Enabled = false;
+                    txtCodigoTipoLivro.Enabled = true;
+                    txtCodigoTipoLivro.ReadOnly = false;
+                }
             }
-            else
+            else 
             {
                 switch (osTipos.SituacaoAtual)
                 {
@@ -575,7 +588,7 @@ namespace apBiblioteca
         // Método para a gravação das categorias de livro atualizados no arquivo tipoLivro.txt, após o formulário ser fechado
         private void FrmTipoLivro_FormClosing(object sender, FormClosingEventArgs e)
         {
-            osTipos.GravacaoEmDisco("C:\\Users\\aluno\\Music\\tipolivro.txt"); // Grava dos dados atualizados no arquivo texto
+            osTipos.GravacaoEmDisco("..\\tipolivro.txt"); // Grava dos dados atualizados no arquivo texto
         }
         /*-----------------------------------------------------------------------------------------------------*/
 

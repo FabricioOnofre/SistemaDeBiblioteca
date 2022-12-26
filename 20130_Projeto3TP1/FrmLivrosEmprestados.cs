@@ -30,13 +30,13 @@ namespace apBiblioteca
         {
             // Faz a leitura dos arquivos textos
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLeitores.LerDados("..\\leitores.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
             AtualizarTela(); // Exibi 
         }

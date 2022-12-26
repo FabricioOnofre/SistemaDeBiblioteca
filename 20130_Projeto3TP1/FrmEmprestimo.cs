@@ -33,13 +33,13 @@ namespace apBiblioteca
             // Leitura dos arquivos textos
 
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLeitores.LerDados("..\\leitores.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
 
             AtualizarTela();  // Exibi os dados iniciais dos arquivos textos 
@@ -229,9 +229,19 @@ namespace apBiblioteca
                 // Quantidade de livros aumenta com o empréstimo concluido
                 osLeitores[linhaLeitor].QuantosLivrosComLeitor += 1;
 
+
+                string codigoLeitor = Convert.ToString(osLeitores[linhaLeitor].CodigoLeitor);
+                string cpfLeitor = Convert.ToString(osLeitores[linhaLeitor].CpfLeitor);
+                DateTime dataNascimento = Convert.ToDateTime(osLeitores[linhaLeitor].DataNascimento);
+                string telefoneLeitor = Convert.ToString(osLeitores[linhaLeitor].TelefoneLeitor);
+                string nomeLeitor = Convert.ToString(osLeitores[linhaLeitor].NomeLeitor);
+                string enderecoLeitor = Convert.ToString(osLeitores[linhaLeitor].EnderecoLeitor);
+                byte qtdLivrosLeitor = osLeitores[linhaLeitor].QuantosLivrosComLeitor;
+                string[] codigoLivroLeitor = osLeitores[linhaLeitor].CodigoLivroComLeitor;
+
                 // Instancia um objeto da classe leitor com todos os seus atributos atulizados para o empréstimo
-                var novoLeitor = new Leitor(Convert.ToString(osLeitores[linhaLeitor].CodigoLeitor), Convert.ToString(osLeitores[linhaLeitor].NomeLeitor),
-                Convert.ToString(osLeitores[linhaLeitor].EnderecoLeitor), osLeitores[linhaLeitor].QuantosLivrosComLeitor, osLeitores[linhaLeitor].CodigoLivroComLeitor);
+                var novoLeitor = new Leitor(codigoLeitor, cpfLeitor, dataNascimento, telefoneLeitor,
+                    nomeLeitor, enderecoLeitor, qtdLivrosLeitor, codigoLivroLeitor);
 
 
                 osLeitores.Excluir(linhaLeitor); // Exclui o registro antigo desse leitor gravado no arquivo texto 
@@ -256,8 +266,8 @@ namespace apBiblioteca
         private void FrmEmprestimo_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Gravação dos dados atualizados dos arquivos texto Leitor e Livro
-            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt");
-            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");
+            osLeitores.GravacaoEmDisco("..\\leitores.txt");
+            osLivros.GravacaoEmDisco("..\\livros.txt");
         }
 
         // variavel que identifica se o leitor mudou a data atual do dtpDevolucao

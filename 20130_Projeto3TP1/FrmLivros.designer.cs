@@ -306,7 +306,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 81);
+            this.label5.Location = new System.Drawing.Point(9, 190);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 18);
             this.label5.TabIndex = 8;
@@ -314,16 +314,18 @@
             // 
             // dgvTipoLivro
             // 
+            this.dgvTipoLivro.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvTipoLivro.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvTipoLivro.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTipoLivro.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colunaCodigo,
             this.colunaDescricao});
             this.dgvTipoLivro.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.dgvTipoLivro.Location = new System.Drawing.Point(12, 102);
+            this.dgvTipoLivro.Location = new System.Drawing.Point(12, 211);
             this.dgvTipoLivro.Name = "dgvTipoLivro";
             this.dgvTipoLivro.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTipoLivro.Size = new System.Drawing.Size(310, 143);
+            this.dgvTipoLivro.Size = new System.Drawing.Size(657, 143);
             this.dgvTipoLivro.TabIndex = 7;
             this.dgvTipoLivro.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTipoLivro_CellClick);
             // 
@@ -349,7 +351,7 @@
             this.groupBox2.Controls.Add(this.txtLeitorComLivro);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Enabled = false;
-            this.groupBox2.Location = new System.Drawing.Point(12, 251);
+            this.groupBox2.Location = new System.Drawing.Point(12, 84);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(657, 103);
             this.groupBox2.TabIndex = 6;
@@ -402,9 +404,9 @@
             // txtTituloLivro
             // 
             this.txtTituloLivro.Location = new System.Drawing.Point(109, 40);
-            this.txtTituloLivro.MaxLength = 30;
+            this.txtTituloLivro.MaxLength = 50;
             this.txtTituloLivro.Name = "txtTituloLivro";
-            this.txtTituloLivro.Size = new System.Drawing.Size(306, 26);
+            this.txtTituloLivro.Size = new System.Drawing.Size(560, 26);
             this.txtTituloLivro.TabIndex = 4;
             this.txtTituloLivro.Leave += new System.EventHandler(this.txtTituloLivro_Leave);
             // 
@@ -414,7 +416,7 @@
             this.txtCodigoLivro.MaxLength = 7;
             this.txtCodigoLivro.Name = "txtCodigoLivro";
             this.txtCodigoLivro.ReadOnly = true;
-            this.txtCodigoLivro.Size = new System.Drawing.Size(79, 26);
+            this.txtCodigoLivro.Size = new System.Drawing.Size(100, 26);
             this.txtCodigoLivro.TabIndex = 3;
             this.txtCodigoLivro.TabStop = false;
             this.txtCodigoLivro.Leave += new System.EventHandler(this.txtCodigoLivro_Leave);

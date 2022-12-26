@@ -48,13 +48,13 @@ namespace apBiblioteca
             }
 
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLeitores.LerDados("..\\leitores.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
             btnInicio.PerformClick();  // Posiciona o formulário para exibir o primeiro livro cadastrado
         }
@@ -631,7 +631,7 @@ namespace apBiblioteca
         // Método para a gravação dos livros atualizados no arquivo livro.txt, após o formulário ser fechado
         private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
         {
-            osLivros.GravacaoEmDisco("C:\\Users\\aluno\\Music\\livros.txt");// Grava os dados atualizados no arquivo texto
+            osLivros.GravacaoEmDisco("..\\livros.txt");// Grava os dados atualizados no arquivo texto
         }
         /*-----------------------------------------------------------------------------------------------------*/
 

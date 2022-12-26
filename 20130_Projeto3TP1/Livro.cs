@@ -10,7 +10,7 @@ namespace apBiblioteca
     class Livro : IRegistro, IComparable<Livro>
     {
         public const int tamanhoCodigoLivro = 7;
-        const int tamanhoTitulo             = 30;
+        const int tamanhoTitulo             = 50;
         const int tamanhoTipo               = TipoLivro.tamanhoCodigoLivro;
         const int tamanhoData               = 10;   // dd/mm/aaaa
         const int tamanhoCodigoLeitor       = Leitor.tamanhoCodigoLeitor;

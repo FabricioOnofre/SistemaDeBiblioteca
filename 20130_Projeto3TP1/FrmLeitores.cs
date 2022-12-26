@@ -49,13 +49,13 @@ namespace apBiblioteca
 
             // Leitura dos arquivos textos
             osLivros = new VetorDados<Livro>(50);
-            osLivros.LerDados("C:\\Users\\aluno\\Music\\livros.txt");
+            osLivros.LerDados("..\\livros.txt");
 
             osLeitores = new VetorDados<Leitor>(50);
-            osLeitores.LerDados("C:\\Users\\aluno\\Music\\leitores.txt");
+            osLeitores.LerDados("..\\leitores.txt");
 
             osTipos = new VetorDados<TipoLivro>(50);
-            osTipos.LerDados("C:\\Users\\aluno\\Music\\tipolivro.txt");
+            osTipos.LerDados("..\\tipolivro.txt");
 
             
             btnInicio.PerformClick();       // Posiciona o formulário para exibir o primeiro leitor cadastrado
@@ -73,11 +73,14 @@ namespace apBiblioteca
 
                 // Preenche os campos de identiicação do leitor
                 txtCodigoLeitor.Text = osLeitores[posicaoAtual].CodigoLeitor;
+                txtCpfLeitor.Text = osLeitores[posicaoAtual].CpfLeitor;
+                dtpNascimento.Value = osLeitores[posicaoAtual].DataNascimento;
+                txtTelefoneLeitor.Text = osLeitores[posicaoAtual].TelefoneLeitor;
                 txtNomeLeitor.Text = osLeitores[posicaoAtual].NomeLeitor;
                 txtEndereco.Text = osLeitores[posicaoAtual].EnderecoLeitor;
 
                 // Preenche e exibe os livros com o leitor 
-                txtLivros.Text = "Código            Título                             Devolução";
+                txtLivros.Text = "Código            Título                                                  Devolução";
                 for (int indLivro = 0; indLivro < osLeitores[posicaoAtual].QuantosLivrosComLeitor; indLivro++)
                 {
                     int ondeLivro = 0;
@@ -459,7 +462,9 @@ namespace apBiblioteca
                         {
                             // Instancia um objeto da classe Leitor, com a quantidade livros 0 e os códigos de livros vazios.
                             // para que depois possamos fazer empréstimos com esse leitor.
-                            var novoLeitor              = new Leitor(txtCodigoLeitor.Text, txtNomeLeitor.Text, txtEndereco.Text, 0, new string[5]);
+                            var novoLeitor              = new Leitor(txtCodigoLeitor.Text, txtCpfLeitor.Text, 
+                                dtpNascimento.Value.Date, txtTelefoneLeitor.Text, txtNomeLeitor.Text,
+                                txtEndereco.Text, 0, new string[5]);
 
                             osLeitores.Incluir(novoLeitor, posicaoDeInclusao);  // inclui um novo registro de leitor no arquivo texto 
                             osLeitores.SituacaoAtual    = Situacao.navegando;   // programa entra no modo de navegação
@@ -522,7 +527,7 @@ namespace apBiblioteca
         // Método para a gravação dos leitores atualizados no arquivo leitores.txt, após o formulário ser fechado
         private void FrmLivros_FormClosing(object sender, FormClosingEventArgs e)
         {
-            osLeitores.GravacaoEmDisco("C:\\Users\\aluno\\Music\\leitores.txt"); // Grava os dados atualizados no arquivo texto
+            osLeitores.GravacaoEmDisco("..\\leitores.txt"); // Grava os dados atualizados no arquivo texto
         }
         /*-----------------------------------------------------------------------------------------------------*/
 
